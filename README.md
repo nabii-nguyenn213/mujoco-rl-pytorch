@@ -1,7 +1,7 @@
-# mujoco-rl-pytorch
+# Soft Actor Critic and Proximal Policy Optimization Implementation with PyTorch 
+This repo implements the **Soft Actor-Critic** (SAC) and **Proximal Policy Optimization** (PPO) algorithms using [PyTorch](https://pytorch.org/) on **Mujoco** environments in [Gymnasium](https://gymnasium.farama.org/environments/mujoco/)
 
 # Environments 
-
 
 | | [Ant](https://gymnasium.farama.org/environments/mujoco/ant/) | [HalfCheetah](https://gymnasium.farama.org/environments/mujoco/half_cheetah/) | [Hopper](https://gymnasium.farama.org/environments/mujoco/hopper/) | [Humanoid](https://gymnasium.farama.org/environments/mujoco/humanoid/) |
 | --- | ---------------- | ------------------ | --------------------------------------- | --------------- |
@@ -20,3 +20,16 @@
 | Visualization | ![](assets/reacher.gif) | ![](assets/swimmer.gif) | ![](assets/walker2d.gif)|
 | Action Space | (2,) | (2,) | (6,) |
 | Observation Space| (10,) | (8,) | (17,) |
+
+# Results 
+
+# Dependencies & Installation 
+
+# Usage 
+
+## Train 
+
+## Description of Configuration Parameters 
+
+## Tensorboard 
+
