@@ -1,0 +1,49 @@
+env:
+  name: Pendulum-v1
+  max_episode_steps: 0
+  reward_scaler: 1.0
+  action_lim: 2.0 
+  kwargs: {}
+    # forward_reward_weight: 1.0
+    # ctrl_cost_weight: 0.001
+    # healthy_reward: 1.0
+    # reset_noise_scale: 0.005
+
+train:
+  run_name: SAC_${env.name}
+  total_timesteps: 50000
+  memory_size: 10000
+  batch_size: 32
+  optimizer:
+    name: Adam
+    actor_lr: 0.003
+    critic_lr: 0.003
+  learning_start: 5000
+  tau: 0.005
+  gamma: 0.99
+  alpha: 0.2
+  show_tb: true
+  device: auto
+  hidden_size_actor: [32, 32]
+  hidden_size_critic: [32, 32]
+  seed: 42
+  gradient_step: 1
+
+eval:
+  eval_every: 1000
+  save_every: 1000
+  log_every: 200
+  eval_episodes: 10
+
+normalizer:
+  normalize_obs: false 
+  obs_norm_clip: 10.0
+  obs_norm_epsilon: 1.0e-8
+
+dir:
+  root: .
+  log: ${dir.root}/logs/log/Classical/${env.name}
+  ckpt: ${dir.root}/results/checkpoints/Classical/${env.name}
+  model: ${dir.root}/results/models/Classical/${env.name}
+  best: ${dir.root}/results/best/Classical/${env.name}
+  tensorboard: ${dir.root}/logs/tensorboard_logs/Classical/${env.name}
