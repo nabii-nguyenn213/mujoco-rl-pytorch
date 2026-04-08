@@ -133,18 +133,35 @@ mpirun -n 4 python main.py --agent SAC --env Hopper-v5
 - `-n` : The number of processes/seeds (MPI ranks) used for parallel agent training.
 
 ## Description of Configuration Parameters 
+- The project supports both Soft Actor-Critic (SAC) and Proximal Policy Optimization (PPO). Some configuration parameters are shared, while others are specific to either off-policy SAC or on-policy PPO.
 
-| Parameter        | Description                             | Example Value   |
-| ---------------- | --------------------------------------- | --------------- |
-| `reward_scaler`  | Scaling factor applied to rewards.      | `1.0`           |
-| `action_lim`     | Maximum action magnitude.               | `1.0`           |
-| `memory_size`    | Replay buffer capacity.                 | `200000`        |
-| `learning_start` | Steps collected before training starts. | `5000`          |
-| `tau`            | Soft target update rate.                | `0.005`         |
-| `gamma`          | Reward discount factor.                 | `0.99`          |
-| `alpha`          | Entropy coefficient.                    | `0.2`           |
-| `hidden_size_actor` | Hidden size of the actor network     | `[64, 64]`      |
-| `hidden_size_critic`| Hidden size of the critic network    | `[64, 64]`      |
+| Parameter             | Description                                                             |   Used In | Example Value |
+| --------------------- | ----------------------------------------------------------------------- | --------: | ------------: |
+| `reward_scaler`       | Scaling factor applied to rewards.                                      |       SAC |         `1.0` |
+| `action_lim`          | Maximum action magnitude used by the policy output.                     | SAC / PPO |         `1.0` |
+| `memory_size`         | Replay buffer capacity.                                                 |       SAC |      `200000` |
+| `learning_start`      | Number of steps collected before training starts.                       |       SAC |        `5000` |
+| `tau`                 | Soft update rate for target networks.                                   |       SAC |       `0.005` |
+| `gamma`               | Discount factor for future rewards.                                     | SAC / PPO |        `0.99` |
+| `alpha`               | Entropy coefficient in SAC.                                             |       SAC |         `0.2` |
+| `rollout_steps`       | Number of on-policy environment steps collected before each PPO update. |       PPO |        `2048` |
+| `batch_size`          | Mini-batch size used during optimization.                               | SAC / PPO |          `64` |
+| `gae_lambda`          | GAE smoothing factor for advantage estimation.                          |       PPO |        `0.95` |
+| `clip_coef`           | PPO clipping coefficient for the policy ratio.                          |       PPO |         `0.2` |
+| `ent_coef`            | Entropy bonus coefficient encouraging exploration.                      |       PPO |         `0.0` |
+| `vf_coef`             | Weight of the value loss term in PPO.                                   |       PPO |         `0.5` |
+| `max_grad_norm`       | Maximum gradient norm used for gradient clipping.                       |       PPO |         `0.5` |
+| `update_epochs`       | Number of epochs over the same rollout data in PPO.                     |       PPO |          `10` |
+| `target_kl`           | Early stopping threshold based on approximate KL divergence.            |       PPO |        `0.02` |
+| `normalize_advantage` | Whether to normalize advantages before PPO updates.                     |       PPO |        `true` |
+| `hidden_size_actor`   | Hidden layer sizes of the actor network.                                | SAC / PPO |    `[64, 64]` |
+| `hidden_size_critic`  | Hidden layer sizes of the critic network.                               | SAC / PPO |    `[64, 64]` |
+| `hidden_act`          | Hidden activation function used in the networks.                        |       PPO |        `Tanh` |
+| `gradient_step`       | Number of gradient updates per training step.                           |       SAC |           `1` |
+| `total_timesteps`     | Total number of environment interaction steps used for training.        | SAC / PPO |     `1000000` |
+| `seed`                | Random seed for reproducibility.                                        | SAC / PPO |          `42` |
+| `device`              | Device used for training.                                               | SAC / PPO |        `auto` |
+| `show_tb`             | Whether to enable TensorBoard logging.                                  | SAC / PPO |        `true` |
 
 ## Tensorboard 
 - Training results can be visualized using [TensorBoard](https://docs.pytorch.org/docs/main/tensorboard.html)
