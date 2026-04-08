@@ -21,20 +21,20 @@ This repo implements the **Soft Actor-Critic** (SAC) and **Proximal Policy Optim
 | Action Space | (2,) | (2,) | (6,) |
 | Observation Space| (10,) | (8,) | (17,) |
 
-| Environment                 | Solved return | Recommended total timesteps |
-|----------------------------|--------------:|----------------------------:|
-| Reacher-v5                |         -3.75 |                     500,000 |
-| Pusher-v5                 |          0.0  |                   2,000,000 |
-| InvertedPendulum-v5       |        950.0  |                      50,000 |
-| InvertedDoublePendulum-v5 |       9100.0  |                      50,000 |
-| HalfCheetah-v5            |       4800.0  |                   1,000,000 |
-| Hopper-v5                 |       3800.0  |                   1,500,000 |
-| Swimmer-v5                |        360.0  |                   1,000,000 |
-| Walker2d-v5               | N/A           |                   1,500,000 |
-| Ant-v5                    |       6000.0  |                   1,500,000 |
-| Humanoid-v5               | N/A           |                   2,000,000 |
-| HumanoidStandup-v5        | N/A           |                   3,000,000 |
-> `Solved return` is the official Gymnasium `reward_threshold` when one is registered. `Recommended total timesteps` is a practical training budget suggestion, not an official requirement.
+<!-- | Environment                 | Solved return | Recommended total timesteps | -->
+<!-- |----------------------------|--------------:|----------------------------:| -->
+<!-- | Reacher-v5                |         -3.75 |                     500,000 | -->
+<!-- | Pusher-v5                 |          0.0  |                   2,000,000 | -->
+<!-- | InvertedPendulum-v5       |        950.0  |                      50,000 | -->
+<!-- | InvertedDoublePendulum-v5 |       9100.0  |                      50,000 | -->
+<!-- | HalfCheetah-v5            |       4800.0  |                   1,000,000 | -->
+<!-- | Hopper-v5                 |       3800.0  |                   1,500,000 | -->
+<!-- | Swimmer-v5                |        360.0  |                   1,000,000 | -->
+<!-- | Walker2d-v5               | N/A           |                   1,500,000 | -->
+<!-- | Ant-v5                    |       6000.0  |                   1,500,000 | -->
+<!-- | Humanoid-v5               | N/A           |                   2,000,000 | -->
+<!-- | HumanoidStandup-v5        | N/A           |                   3,000,000 | -->
+<!-- > `Solved return` is the official Gymnasium `reward_threshold` when one is registered. `Recommended total timesteps` is a practical training budget suggestion, not an official requirement. -->
 
 # Dependencies & Installation 
 - Python version : 3.10.20 
@@ -182,7 +182,7 @@ tensorboard --logdir logs/tensorboard_logs/SAC/Hopper-v5/SAC_Hopper_20260408_163
 # Results 
 | | [Ant](https://gymnasium.farama.org/environments/mujoco/ant/) | [HalfCheetah](https://gymnasium.farama.org/environments/mujoco/half_cheetah/) | [Hopper](https://gymnasium.farama.org/environments/mujoco/hopper/) | [Humanoid](https://gymnasium.farama.org/environments/mujoco/humanoid/) |
 | --- | ---------------- | ------------------ | --------------------------------------- | --------------- |
-| SAC |![]() | ![]() | ![]()| ![]() |
+| SAC |![]() | ![]() | ![](assets/plots/SAC/hopper_episode_return_compare.png)| ![]() |
 | PPO |![]() | ![]() | ![]()| ![]() |
 
 | | [Humanoid Standup](https://gymnasium.farama.org/environments/mujoco/humanoid_standup/) | [Inverted Double Pendulum](https://gymnasium.farama.org/environments/mujoco/inverted_double_pendulum/#) | [Inverted Pendulum](https://gymnasium.farama.org/environments/mujoco/inverted_pendulum/) | [Pusher](https://gymnasium.farama.org/environments/mujoco/pusher/) |
@@ -216,4 +216,4 @@ python utils/visualizer.py --agent SAC --env Hopper-v5 --runid 20260408_163845 -
 | `--env`   | Select environments   | [Mujoco environments](https://gymnasium.farama.org/environments/mujoco/) | `Hopper-v5` | 
 | `--runid` | Trained agent's run ID   | Timestamp in logs | `None` (must be provided) | 
 | `--loadOption` | Choose Load Option  | [`best`, `final`, `checkpoint_[timestep]`] | `best` | 
-| `--rank` | Choose rank   | range(`0` to `-n`) based on `mpirun` | `None` | 
+| `--rank` | Choose rank   | range(`0` to `n`) based on `mpirun` | `None` | 
