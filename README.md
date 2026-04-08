@@ -21,8 +21,6 @@ This repo implements the **Soft Actor-Critic** (SAC) and **Proximal Policy Optim
 | Action Space | (2,) | (2,) | (6,) |
 | Observation Space| (10,) | (8,) | (17,) |
 
-# Results 
-
 # Dependencies & Installation 
 
 # Usage 
@@ -32,6 +30,8 @@ This repo implements the **Soft Actor-Critic** (SAC) and **Proximal Policy Optim
 ## Description of Configuration Parameters 
 
 ## Tensorboard 
+
+# Results 
 
 # Demonstration
 
