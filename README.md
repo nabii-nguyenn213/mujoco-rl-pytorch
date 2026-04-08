@@ -136,7 +136,7 @@ mpirun -n 4 python main.py --agent SAC --env Hopper-v5
 The project supports both Soft Actor-Critic (SAC) and Proximal Policy Optimization (PPO). Some configuration parameters are shared, while others are specific to either off-policy SAC or on-policy PPO.
 
 | Parameter             | Description                                                             |   Used In | Example Value |
-| --------------------- | ----------------------------------------------------------------------- | :--------: | ------------: |
+| --------------------- | ----------------------------------------------------------------------- | :-------- | ------------: |
 | `reward_scaler`       | Scaling factor applied to rewards.                                      |       SAC |         `1.0` |
 | `action_lim`          | Maximum action magnitude used by the policy output.                     | SAC / PPO |         `1.0` |
 | `memory_size`         | Replay buffer capacity.                                                 |       SAC |      `200000` |
