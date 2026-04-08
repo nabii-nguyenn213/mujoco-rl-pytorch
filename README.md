@@ -22,7 +22,6 @@ This repo implements the **Soft Actor-Critic** (SAC) and **Proximal Policy Optim
 | Observation Space| (10,) | (8,) | (17,) |
 
 # Dependencies & Installation 
-
 - Python version : 3.10.20 
 - Libraries : 
     - gymnasium==1.2.3
@@ -63,6 +62,57 @@ pip install -r requirements.txt
 python utils/verify_setup.py
 ```
 
+# Folder Organization
+```
+├── agents
+│   ├── PPO.py
+│   └── SAC.py
+├── components   # <---- store all the components of SAC and PPO
+│   ├── networks.py
+│   └── replaybuffer.py
+├── configs
+│   ├── PPO.yaml
+│   └── SAC.yaml
+├── envs
+│   ├── env.py
+│   └── wrapper.py
+├── logs           # <---- Logging Directory
+│   ├── log
+│   │   ├── SAC
+│   │   │   └── Hopper-v5
+│   │   │       └── SAC_Hopper-v5_20260408_170139 # <-- Run ID
+│   │   │           ├── rank_0                    # <-- MPI Rank
+│   │   │           ├── rank_1
+│   │   │           ├── rank_2
+│   │   │           └── rank_3
+│   │   └── PPO 
+│   └── tensorboard_logs    # <---- TensorBoard Logging
+│       └── SAC
+│           └── Hopper-v5
+│               └── SAC_Hopper-v5_20260408_170139
+│                   ├── rank_0
+│                   ├── rank_1
+│                   ├── rank_2
+│                   └── rank_3
+├── main.py
+├── README.md
+├── requirements.txt
+├── results             # <---- save results : best model, checkpoints, last models
+│   ├── best
+│   ├── checkpoints
+│   └── models
+├── train
+│   ├── train_base.py
+│   ├── train_PPO.py
+│   └── train_SAC.py
+└── utils
+    ├── helper.py
+    ├── logger.py
+    ├── mpi_utils.py
+    ├── plotter.py
+    └── verify_setup.py
+```
+
 # Usage 
 ## Train 
 - Train agent on single seed 
@@ -80,7 +130,7 @@ python main.py --agent SAC --env Hopper-v5
 # Example Usage
 mpirun -n 4 python main.py --agent SAC --env Hopper-v5 
 ```
-    - `-n` : The number of processes/seeds (MPI ranks) used for parallel agent training.
+- `-n` : The number of processes/seeds (MPI ranks) used for parallel agent training.
 
 ## Description of Configuration Parameters 
 
@@ -104,10 +154,24 @@ tensorboard --logdir logs/tensorboard_logs/SAC/Hopper-v5/SAC_Hopper_20260408_163
 ```
 
 # Results 
+| | [Ant](https://gymnasium.farama.org/environments/mujoco/ant/) | [HalfCheetah](https://gymnasium.farama.org/environments/mujoco/half_cheetah/) | [Hopper](https://gymnasium.farama.org/environments/mujoco/hopper/) | [Humanoid](https://gymnasium.farama.org/environments/mujoco/humanoid/) |
+| --- | ---------------- | ------------------ | --------------------------------------- | --------------- |
+| SAC |![]() | ![]() | ![]()| ![]() |
+| PPO |![]() | ![]() | ![]()| ![]() |
+
+| | [Humanoid Standup](https://gymnasium.farama.org/environments/mujoco/humanoid_standup/) | [Inverted Double Pendulum](https://gymnasium.farama.org/environments/mujoco/inverted_double_pendulum/#) | [Inverted Pendulum](https://gymnasium.farama.org/environments/mujoco/inverted_pendulum/) | [Pusher](https://gymnasium.farama.org/environments/mujoco/pusher/) |
+| --- | ------ | ---------------- | --------------------------------------- | --------------- |
+| SAC | ![]() | ![]() | ![]()| ![]() |
+| PPO | ![]() | ![]() | ![]()| ![]() |
+
+| | [Reacher](https://gymnasium.farama.org/environments/mujoco/reacher/) | [Swimmer](https://gymnasium.farama.org/environments/mujoco/swimmer/) | [Walker2D](https://gymnasium.farama.org/environments/mujoco/walker2d/) | 
+| --- | ------ | ---------------- | --------------------------------------- | 
+| SAC | ![]() | ![]() | ![]()|
+| PPO | ![]() | ![]() | ![]()|
+
+# Demonstration
 - Visualize trained agent 
 ```bash 
 
 ```
-
-# Demonstration
 
