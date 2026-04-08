@@ -187,7 +187,7 @@ tensorboard --logdir logs/tensorboard_logs/SAC/Hopper-v5/SAC_Hopper_20260408_163
 
 | | [Humanoid Standup](https://gymnasium.farama.org/environments/mujoco/humanoid_standup/) | [Inverted Double Pendulum](https://gymnasium.farama.org/environments/mujoco/inverted_double_pendulum/#) | [Inverted Pendulum](https://gymnasium.farama.org/environments/mujoco/inverted_pendulum/) | [Pusher](https://gymnasium.farama.org/environments/mujoco/pusher/) |
 | --- | ------ | ---------------- | --------------------------------------- | --------------- |
-| SAC | ![]() | ![](assets/plots/SAC/inverted_pendulum_episode_return_compare.png) | ![]()| ![]() |
+| SAC | ![]() | ![]() | ![](assets/plots/SAC/inverted_pendulum_episode_return_compare.png)| ![]() |
 | PPO | ![]() | ![]() | ![]()| ![]() |
 
 | | [Reacher](https://gymnasium.farama.org/environments/mujoco/reacher/) | [Swimmer](https://gymnasium.farama.org/environments/mujoco/swimmer/) | [Walker2D](https://gymnasium.farama.org/environments/mujoco/walker2d/) | 
