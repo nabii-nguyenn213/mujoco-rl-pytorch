@@ -143,8 +143,8 @@ mpirun -n 4 python main.py --agent SAC --env Hopper-v5
 | `tau`            | Soft target update rate.                | `0.005`         |
 | `gamma`          | Reward discount factor.                 | `0.99`          |
 | `alpha`          | Entropy coefficient.                    | `0.2`           |
-| `hidden_size_actor`          | Hidden size of the actor network | `[64, 64]`           |
-| `hidden_size_critic`          | Hidden size of the critic network | `[64, 64]`           |
+| `hidden_size_actor` | Hidden size of the actor network     | `[64, 64]`      |
+| `hidden_size_critic`| Hidden size of the critic network    | `[64, 64]`      |
 
 ## Tensorboard 
 - Training results can be visualized using [TensorBoard](https://docs.pytorch.org/docs/main/tensorboard.html)

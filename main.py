@@ -1,14 +1,15 @@
 import os 
 # NOTE : Comment these lines if run with MPI 
-os.environ.setdefault("OMP_NUM_THREADS", "8")
-os.environ.setdefault("MKL_NUM_THREADS", "8")
-os.environ.setdefault("OPENBLAS_NUM_THREADS", "8")
-os.environ.setdefault("NUMEXPR_NUM_THREADS", "8")
+# os.environ.setdefault("OMP_NUM_THREADS", "8")
+# os.environ.setdefault("MKL_NUM_THREADS", "8")
+# os.environ.setdefault("OPENBLAS_NUM_THREADS", "8")
+# os.environ.setdefault("NUMEXPR_NUM_THREADS", "8")
 
 import time 
 import argparse
 from utils.helper import loadConfig
 from train.train_SAC import SAC
+from train.train_PPO import PPO
 from utils.mpi_utils import get_rank, get_world_size
 
 import torch
@@ -37,8 +38,11 @@ if __name__ == "__main__":
             exp = SAC(config, rank=get_rank())
         exp.run()
     elif train_agent.lower() == "ppo": 
-        # TODO : implement
-        pass
+        if get_world_size()==1: 
+            exp = PPO(config) 
+        else: 
+            exp = PPO(config, rank=get_rank())
+        exp.run()
     else: 
         raise ValueError(f"Unsupported train type {train_agent}")
     end_time = time.perf_counter() - start_time

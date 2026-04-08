@@ -1,0 +1,49 @@
+env:
+  name: Hopper-v5
+  max_episode_steps: 0
+  reward_scaler: 1.0
+  action_lim: 1.0
+  kwargs:
+    terminate_when_unhealthy: true
+    reset_noise_scale: 0.01
+
+train:
+  run_name: PPO_${env.name}
+  total_timesteps: 1000000
+  rollout_steps: 2048
+  batch_size: 64
+
+  optimizer:
+    name: Adam
+    actor_lr: 0.0003
+    critic_lr: 0.0003
+
+  gamma: 0.99
+  gae_lambda: 0.95
+  clip_coef: 0.2
+  ent_coef: 0.0
+  vf_coef: 0.5
+  max_grad_norm: 0.5
+  update_epochs: 10
+  target_kl: 0.02
+
+  show_tb: true
+  device: auto
+  hidden_size_actor: [64, 64]
+  hidden_size_critic: [256, 256]
+  seed: 42
+  normalize_advantage: true
+
+eval:
+  eval_every: 5000
+  save_every: 5000
+  log_every: 500
+  eval_episodes: 10
+
+dir:
+  root: .
+  log: ${dir.root}/logs/log/PPO/${env.name}
+  ckpt: ${dir.root}/results/checkpoints/PPO/${env.name}
+  model: ${dir.root}/results/models/PPO/${env.name}
+  best: ${dir.root}/results/best/PPO/${env.name}
+  tensorboard: ${dir.root}/logs/tensorboard_logs/PPO/${env.name}

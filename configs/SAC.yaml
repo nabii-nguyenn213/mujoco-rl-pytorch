@@ -1,44 +1,42 @@
 env:
-  name: Pendulum-v1
+  name: Hopper-v5
   max_episode_steps: 0
   reward_scaler: 1.0
-  action_lim: 2.0 
-  kwargs: {}
-    # forward_reward_weight: 1.0
-    # ctrl_cost_weight: 0.001
-    # healthy_reward: 1.0
-    # reset_noise_scale: 0.005
-
+  action_lim: 1.0 
+  kwargs: 
+    terminate_when_unhealthy: true
+    reset_noise_scale: 0.01
+    
 train:
   run_name: SAC_${env.name}
-  total_timesteps: 300000
+  total_timesteps: 1000000
   memory_size: 100000
   batch_size: 128
   optimizer:
     name: Adam
-    actor_lr: 0.003
-    critic_lr: 0.003
+    actor_lr: 0.0003
+    critic_lr: 0.0005
   learning_start: 5000
   tau: 0.005
   gamma: 0.99
   alpha: 0.2
   show_tb: true
   device: auto
-  hidden_size_actor: [32, 32]
-  hidden_size_critic: [32, 32]
+  hidden_size_actor: [64, 64]
+  hidden_size_critic: [256, 256]
   seed: 42
   gradient_step: 1
 
 eval:
-  eval_every: 1000
-  save_every: 1000
-  log_every: 200
+  eval_every: 5000
+  save_every: 5000
+  log_every: 500
   eval_episodes: 10
 
 dir:
   root: .
-  log: ${dir.root}/logs/log/Classical/${env.name}
-  ckpt: ${dir.root}/results/checkpoints/Classical/${env.name}
-  model: ${dir.root}/results/models/Classical/${env.name}
-  best: ${dir.root}/results/best/Classical/${env.name}
-  tensorboard: ${dir.root}/logs/tensorboard_logs/Classical/${env.name}
+  log: ${dir.root}/logs/log/SAC/${env.name}
+  ckpt: ${dir.root}/results/checkpoints/SAC/${env.name}
+  model: ${dir.root}/results/models/SAC/${env.name}
+  best: ${dir.root}/results/best/SAC/${env.name}
+  tensorboard: ${dir.root}/logs/tensorboard_logs/SAC/${env.name}

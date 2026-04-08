@@ -2,8 +2,8 @@ import os
 import numpy as np
 import torch
 from train.train_base import TrainAgent
-from agents.SAC import SACAgent
-from components.replaybuffer import ReplayBuffer
+from agents.SAC import SAC_Agent
+from components.buffer import ReplayBuffer
 from envs.env import make_env
 
 class SAC(TrainAgent):
@@ -18,13 +18,12 @@ class SAC(TrainAgent):
         assert len(self.env.action_space.shape) == 1,"ClassicalSACExperiment currently expects continuous 1D Box action space."
         self.obs_dim = self.env.observation_space.shape[0]
         self.act_dim = self.env.action_space.shape[0]
-        self.agent = SACAgent(self.config)
+        self.agent = SAC_Agent(self.config)
         self.replay_buffer = ReplayBuffer(
             max_size=self.memory_size,
-            obs_shape=self.env.observation_space.shape,
+            obs_dim=self.obs_dim,
             act_dim=self.act_dim,
         )
-        self.update_obs_stats(self.obs)
         self.last_log_info = None
 
     def _random_policy_action(self):
@@ -96,8 +95,6 @@ class SAC(TrainAgent):
                 next_obs, reward, terminated, truncated, info = self.env.step(env_action)
                 done = terminated or truncated
 
-                self.update_obs_stats(next_obs)
-
                 self.replay_buffer.store_transition(
                     state=self.obs,
                     action=policy_action,
@@ -140,7 +137,6 @@ class SAC(TrainAgent):
                         episode_length=self.episode_len,
                     )
                     self.obs, _ = self.env.reset()
-                    self.update_obs_stats(self.obs)
                     self.reset_episode_stats()
             final_path = os.path.join(self.model_dir, "sac_final.pt")
             self._save(final_path)
@@ -148,3 +144,17 @@ class SAC(TrainAgent):
         finally:
             self.close()
             self.env.close()
+
+    def _save(self, path):
+            ckpt = {
+                "global_step": self.global_step,
+                "episode_idx": self.episode_idx,
+                "config": self.config,
+                "actor_critic_nets": self.agent.net.state_dict(),
+                "target_critic1": self.agent.target_critic1.state_dict(),
+                "target_critic2": self.agent.target_critic2.state_dict(),
+                "actor_optim": self.agent.actor_optimizer.state_dict(),
+                "critic1_optim": self.agent.crtic1_optimizer.state_dict(),
+                "critic2_optim": self.agent.crtic2_optimizer.state_dict(),
+            }
+            torch.save(ckpt, path)

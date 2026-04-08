@@ -44,10 +44,6 @@ class TrainAgent(ABC):
         self.log_every = int(self._get("eval.log_every", self._get("train.log_every", 1000)))
         self.eval_episodes = int(self._get("eval.eval_episodes", self._get("train.eval_episodes", 5)))
 
-        self.normalize_obs = bool(self._get("normalizer.normalize_obs", self._get("train.normalize_obs", False)))
-        self.obs_norm_clip = float(self._get("normalizer.obs_norm_clip", self._get("train.obs_norm_clip", 10.0)))
-        self.obs_norm_epsilon = float(self._get("normalizer.obs_norm_epsilon", self._get("train.obs_norm_epsilon", 1e-8)))
-
         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
         self.log_dir = os.path.join(self._get("dir.log"), f"{self.run_name}_{timestamp}")
         self.ckpt_dir = os.path.join(self._get("dir.ckpt"), f"{self.run_name}_{timestamp}") 
@@ -69,7 +65,6 @@ class TrainAgent(ABC):
         self.env = None
         self.agent = None
         self.replay_buffer = None
-        self.obs_normalizer = None
 
         self.obs = None
         self.obs_dim = None
@@ -79,7 +74,6 @@ class TrainAgent(ABC):
         self.episode_len = 0
 
         self._set_seed()
-        self._build_normalizer()
 
         self.logger = None
 
@@ -144,11 +138,6 @@ class TrainAgent(ABC):
     def reset_episode_stats(self):
         self.episode_reward = 0.0
         self.episode_len = 0
-
-    def save_normalizer(self, path):
-        if self.obs_normalizer is None:
-            return
-        torch.save(self.obs_normalizer.state_dict(), path)
 
     def close(self):
         if self.logger is not None:
