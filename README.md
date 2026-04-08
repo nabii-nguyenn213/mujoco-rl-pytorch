@@ -65,12 +65,49 @@ python utils/verify_setup.py
 
 # Usage 
 ## Train 
+- Train agent on single seed 
+```bash
+# Example Usage
+python main.py --agent SAC --env Hopper-v5
+``` 
+| | Description | Available value | Default value | 
+| --- | --------| --------------- | ------------- | 
+| `--agent` | Select agent to train | [`SAC`, `PPO`] | `SAC` | 
+| `--env`   | Select environments   | All Mujoco environments available on Gymnasium | in configuration file | 
+
+- Train agent with [MPI](https://docs.open-mpi.org/en/v5.0.x/installing-open-mpi/quickstart.html) : train multiple agents with multiple seeds in parallel 
+```bash 
+# Example Usage
+mpirun -n 4 python main.py --agent SAC --env Hopper-v5 
+```
+    - `-n` : The number of processes/seeds (MPI ranks) used for parallel agent training.
 
 ## Description of Configuration Parameters 
 
+| Parameter        | Description                             | Example Value   |
+| ---------------- | --------------------------------------- | --------------- |
+| `reward_scaler`  | Scaling factor applied to rewards.      | `1.0`           |
+| `action_lim`     | Maximum action magnitude.               | `1.0`           |
+| `memory_size`    | Replay buffer capacity.                 | `200000`        |
+| `learning_start` | Steps collected before training starts. | `5000`          |
+| `tau`            | Soft target update rate.                | `0.005`         |
+| `gamma`          | Reward discount factor.                 | `0.99`          |
+| `alpha`          | Entropy coefficient.                    | `0.2`           |
+| `hidden_size_actor`          | Hidden size of the actor network | `[64, 64]`           |
+| `hidden_size_critic`          | Hidden size of the critic network | `[64, 64]`           |
+
 ## Tensorboard 
+- Training results can be visualized using [TensorBoard](https://docs.pytorch.org/docs/main/tensorboard.html)
+```bash 
+# Example Usage
+tensorboard --logdir logs/tensorboard_logs/SAC/Hopper-v5/SAC_Hopper_20260408_163845/
+```
 
 # Results 
+- Visualize trained agent 
+```bash 
+
+```
 
 # Demonstration
 
