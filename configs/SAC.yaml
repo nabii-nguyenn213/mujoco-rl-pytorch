@@ -3,26 +3,24 @@ env:
   max_episode_steps: 0
   reward_scaler: 1.0
   action_lim: 1.0 
-  kwargs: 
-    terminate_when_unhealthy: true
-    reset_noise_scale: 0.01
+  kwargs: {}
     
 train:
   run_name: SAC_${env.name}
-  total_timesteps: 1000000
-  memory_size: 100000
+  total_timesteps: 500000
+  memory_size: 200000
   batch_size: 128
   optimizer:
     name: Adam
     actor_lr: 0.0003
-    critic_lr: 0.0005
+    critic_lr: 0.0003
   learning_start: 5000
   tau: 0.005
   gamma: 0.99
   alpha: 0.2
   show_tb: true
   device: auto
-  hidden_size_actor: [64, 64]
+  hidden_size_actor: [128, 128]
   hidden_size_critic: [256, 256]
   seed: 42
   gradient_step: 1

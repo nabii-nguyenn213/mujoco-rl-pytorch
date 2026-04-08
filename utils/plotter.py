@@ -426,8 +426,8 @@ class Plotter:
 
 def get_parser(): 
     args = argparse.ArgumentParser()
-    args.add_argument("--csv", type=str, default="results/plots/csv/Quantum/LunarLander-v3")
-    args.add_argument("--save", type=str, default="results/plots/figures/Quantum/LunarLander-v3")
+    args.add_argument("--csv", type=str, default="results/plots/SAC/InvertedDoublePendulum-v5")
+    args.add_argument("--save", type=str, default="assets/plots/SAC/")
     return args.parse_args()
 
 if __name__ == "__main__":
@@ -451,13 +451,13 @@ if __name__ == "__main__":
 
     # plotter.plot_group("returns")
 
-    plotter.plot_metric("run-.-tag-episode_return.csv")
-    # plotter.plot_metric("run-.-tag-episode_return_2.csv")
-    # plotter.plot_metric("run-.-tag-episode_return_3.csv")
-    # plotter.plot_metric("run-.-tag-episode_return_4.csv")
+    # plotter.plot_metric("run-.-tag-episode_return_rank_0.csv", save_name="Hopper_SAC")
+    # plotter.plot_metric("run-.-tag-episode_return_rank_1.csv", save_name="Hopper_SAC")
+    # plotter.plot_metric("run-.-tag-episode_return_rank_2.csv", save_name="Hopper_SAC")
+    # plotter.plot_metric("run-.-tag-episode_return_rank_3.csv", save_name="Hopper_SAC")
 
-    # plotter.plot_episode_return_all(legends=["actor=[256, 256] critic=[256, 256]", 
-    #                                          "actor=[64, 64] critic=[256, 256]", 
-    #                                          "actor=[256, 256] critic=[64, 64]", 
-    #                                          "actor=[64, 64] critic=[64, 64]"
-    #                                          ]) 
+    plotter.plot_episode_return_all(smooth_window=0, legends=["rank_0",
+                                                              "rank_1", 
+                                                              "rank_2", 
+                                                              "rank_3" 
+                                                              ]) 
