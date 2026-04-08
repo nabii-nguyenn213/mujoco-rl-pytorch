@@ -182,7 +182,7 @@ tensorboard --logdir logs/tensorboard_logs/SAC/Hopper-v5/SAC_Hopper_20260408_163
 # Results 
 | | [Ant](https://gymnasium.farama.org/environments/mujoco/ant/) | [HalfCheetah](https://gymnasium.farama.org/environments/mujoco/half_cheetah/) | [Hopper](https://gymnasium.farama.org/environments/mujoco/hopper/) | [Humanoid](https://gymnasium.farama.org/environments/mujoco/humanoid/) |
 | --- | ---------------- | ------------------ | --------------------------------------- | --------------- |
-| SAC |![]() | ![]() | ![](assets/plots/SAC/hopper_episode_return_compare.png)| ![]() |
+| SAC |![]() | ![](assets/plots/SAC/half_cheetah_episode_return_compare.png) | ![](assets/plots/SAC/hopper_episode_return_compare.png)| ![]() |
 | PPO |![]() | ![]() | ![]()| ![]() |
 
 | | [Humanoid Standup](https://gymnasium.farama.org/environments/mujoco/humanoid_standup/) | [Inverted Double Pendulum](https://gymnasium.farama.org/environments/mujoco/inverted_double_pendulum/#) | [Inverted Pendulum](https://gymnasium.farama.org/environments/mujoco/inverted_pendulum/) | [Pusher](https://gymnasium.farama.org/environments/mujoco/pusher/) |
