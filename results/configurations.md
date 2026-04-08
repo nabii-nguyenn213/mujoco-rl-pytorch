@@ -30,9 +30,18 @@
 |  |  | 
 
 ## InvertedPendulum-v5
-| Parameter             |   Value |
-| ----------------------| ------: | 
-|  |  | 
+| Parameter             |   Value  |
+| ----------------------| ------:  | 
+| `reward_scaler`       | `1.0`    | 
+| `action_lim`          | `3.0`    | 
+| `total_timesteps`     |`50_000`  | 
+| `memory_size`         |`100_000` | 
+| `batch_size`          |`128`     | 
+| `learning_start`      |`5_000`   | 
+| `hidden_size_actor`   |`[64, 64]`| 
+| `hidden_size_critic`  |`[64, 64]`| 
+| `actor_lr`            |`0.0003`  | 
+| `critic_lr`           |`0.0003`  | 
 
 ## Pusher-v5 
 | Parameter             |   Value |
