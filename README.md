@@ -25,8 +25,8 @@ This repo implements the **Soft Actor-Critic** (SAC) and **Proximal Policy Optim
 |----------------------------|--------------:|----------------------------:|
 | Reacher-v5                |         -3.75 |                     500,000 |
 | Pusher-v5                 |          0.0  |                   2,000,000 |
-| InvertedPendulum-v5       |        950.0  |                     100,000 |
-| InvertedDoublePendulum-v5 |       9100.0  |                     500,000 |
+| InvertedPendulum-v5       |        950.0  |                      50,000 |
+| InvertedDoublePendulum-v5 |       9100.0  |                      50,000 |
 | HalfCheetah-v5            |       4800.0  |                   1,000,000 |
 | Hopper-v5                 |       3800.0  |                   1,500,000 |
 | Swimmer-v5                |        360.0  |                   1,000,000 |
@@ -187,7 +187,7 @@ tensorboard --logdir logs/tensorboard_logs/SAC/Hopper-v5/SAC_Hopper_20260408_163
 
 | | [Humanoid Standup](https://gymnasium.farama.org/environments/mujoco/humanoid_standup/) | [Inverted Double Pendulum](https://gymnasium.farama.org/environments/mujoco/inverted_double_pendulum/#) | [Inverted Pendulum](https://gymnasium.farama.org/environments/mujoco/inverted_pendulum/) | [Pusher](https://gymnasium.farama.org/environments/mujoco/pusher/) |
 | --- | ------ | ---------------- | --------------------------------------- | --------------- |
-| SAC | ![]() | ![]() | ![](assets/plots/SAC/inverted_pendulum_episode_return_compare.png)| ![]() |
+| SAC | ![]() | ![](assets/plots/SAC/inverted_double_pendulum_episode_return_compare.png) | ![](assets/plots/SAC/inverted_pendulum_episode_return_compare.png)| ![]() |
 | PPO | ![]() | ![]() | ![]()| ![]() |
 
 | | [Reacher](https://gymnasium.farama.org/environments/mujoco/reacher/) | [Swimmer](https://gymnasium.farama.org/environments/mujoco/swimmer/) | [Walker2D](https://gymnasium.farama.org/environments/mujoco/walker2d/) | 
@@ -207,6 +207,8 @@ python utils/visualizer.py --agent SAC --env Hopper-v5 --runid 20260408_163845 -
 python utils/visualizer.py --agent SAC --env Hopper-v5 --runid 20260408_163845 --loadOption final
 # Load agent at checkpoint 100000
 python utils/visualizer.py --agent SAC --env Hopper-v5 --runid 20260408_163845 --loadOption checkpoint_100000
+# Load best agent from rank 0
+python utils/visualizer.py --agent SAC --env Hopper-v5 --runid 20260408_163845 --loadOption best --rank 0
 ```
 | Flag      | Description           | Available value | Default value | 
 | --------- | --------------------- | --------------- | ------------- | 
@@ -214,4 +216,4 @@ python utils/visualizer.py --agent SAC --env Hopper-v5 --runid 20260408_163845 -
 | `--env`   | Select environments   | [Mujoco environments](https://gymnasium.farama.org/environments/mujoco/) | `Hopper-v5` | 
 | `--runid` | Trained agent's run ID   | Timestamp in logs | `None` (must be provided) | 
 | `--loadOption` | Choose Load Option  | [`best`, `final`, `checkpoint_[timestep]`] | `best` | 
-
+| `--rank` | Choose rank   | range(`0` to `-n`) based on `mpirun` | `None` | 
