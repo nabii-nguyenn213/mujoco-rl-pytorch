@@ -23,8 +23,45 @@ This repo implements the **Soft Actor-Critic** (SAC) and **Proximal Policy Optim
 
 # Dependencies & Installation 
 
-# Usage 
+- Python version : 3.10.20 
+- Libraries : 
+    - gymnasium==1.2.3
+    - gymnasium[mujoco]==1.2.3
+    - numpy==2.4.4
+    - omegaconf==2.3.0
+    - PyYAML==6.0.3
+    - torch==2.11.0
+    - tensorboard==2.20.0 (Optional)
+    - mpi4py==4.1.1 (Optional)
+- Installation: 
+```bash
+pip install -r requirements.txt 
+```
+- If you use [conda](https://docs.conda.io/projects/conda/en/latest/user-guide/install/index.html) virtual environment
+```bash
+conda create -n mujoco_rl python=3.10.20
+conda activate mujoco_rl 
+pip install -r requirements.txt 
+``` 
+- If you use [venv](https://docs.python.org/3/library/venv.html) 
+    - **Windows** : 
+    ```bash 
+    py -3.10 -m venv .venv
+    .venv\Scripts\activate
+    pip install -r requirements.txt
+    ```
+    - **Linux/MacOS**: 
+    ```bash 
+    python3.10 -m venv .venv
+    source .venv/bin/activate
+    pip install -r requirements.txt
+    ```
+- **Verify Setup** (Optional) : After installing the dependencies, run the following command to verify that the environment is configured correctly:
+```bash 
+python utils/verify_setup.py
+```
 
+# Usage 
 ## Train 
 
 ## Description of Configuration Parameters 
