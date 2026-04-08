@@ -120,9 +120,9 @@ python utils/verify_setup.py
 # Example Usage
 python main.py --agent SAC --env Hopper-v5
 ``` 
-| | Description | Available value | Default value | 
-| --- | --------| --------------- | ------------- | 
-| `--agent` | Select agent to train | [`SAC`, `PPO`] | `SAC` | 
+| Flag      | Description           | Available value | Default value | 
+| --------- | ----------------------| --------------- | ------------- | 
+| `--agent` | Select agent to train | [`SAC`, `PPO`]  | `SAC`         | 
 | `--env`   | Select environments   | [Mujoco environments](https://gymnasium.farama.org/environments/mujoco/) | in [configuration file](configs/SAC.yaml) | 
 
 - Train agent with [MPI](https://docs.open-mpi.org/en/v5.0.x/installing-open-mpi/quickstart.html) : train multiple agents with multiple seeds in parallel 
@@ -189,6 +189,18 @@ tensorboard --logdir logs/tensorboard_logs/SAC/Hopper-v5/SAC_Hopper_20260408_163
 # Demonstration
 - Visualize trained agent 
 ```bash 
-
+# Example Usage 
+# Load best agent
+python utils/visualizer.py --agent SAC --env Hopper-v5 --runid 20260408_163845 --loadOption best
+# Load final agent
+python utils/visualizer.py --agent SAC --env Hopper-v5 --runid 20260408_163845 --loadOption final
+# Load agent at checkpoint 100000
+python utils/visualizer.py --agent SAC --env Hopper-v5 --runid 20260408_163845 --loadOption checkpoint_100000
 ```
+| Flag      | Description           | Available value | Default value | 
+| --------- | --------------------- | --------------- | ------------- | 
+| `--agent` | Select agent to demo  | [`SAC`, `PPO`]  | `SAC`         | 
+| `--env`   | Select environments   | [Mujoco environments](https://gymnasium.farama.org/environments/mujoco/) | in [configuration file](configs/SAC.yaml) | 
+| `--runid` | Trained agent's run ID   | Timestamp in logs | `None` (must be provided) | 
+| `--loadOption` | Choose Load Option  | [`best`, `final`, `checkpoint_[timestep]`] | `best` | 
 
