@@ -119,3 +119,22 @@ class SAC_Agent:
             target_param.data.copy_(
                 self.tau * source_param.data + (1.0 - self.tau) * target_param.data
             )
+
+    def save_model(self): 
+        torch.save({
+            "actor_critic_nets": self.net.state_dict(), 
+            "target_critic1"   : self.target_critic1.state_dict(), 
+            "target_critic2"   : self.target_critic2.state_dict(), 
+            "actor_optim"      : self.actor_optimizer.state_dict(), 
+            "critic1_optim"      : self.crtic1_optimizer.state_dict(), 
+            "critic2_optim"      : self.crtic2_optimizer.state_dict() 
+        }, self.config["dir"]["model"])
+
+    def load_model(self, path): 
+        model = torch.load(path, map_location=self.device, weights_only=False)
+        self.net.load_state_dict(model["actor_critic_nets"])
+        self.target_critic1.load_state_dict(model["target_critic1"])
+        self.target_critic2.load_state_dict(model["target_critic2"])
+        self.actor_optimizer.load_state_dict(model["actor_optim"])
+        self.crtic1_optimizer.load_state_dict(model["critic1_optim"])
+        self.crtic2_optimizer.load_state_dict(model["critic2_optim"])

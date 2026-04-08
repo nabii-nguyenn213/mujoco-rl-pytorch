@@ -27,6 +27,8 @@ This repo implements the **Soft Actor-Critic** (SAC) and **Proximal Policy Optim
 - Libraries : 
     - gymnasium==1.2.3
     - gymnasium[mujoco]==1.2.3
+    - pandas==2.3.3 
+    - matplotlib==3.10.8
     - numpy==2.4.4
     - omegaconf==2.3.0
     - PyYAML==6.0.3
@@ -43,7 +45,7 @@ conda create -n mujoco_rl python=3.10.20
 conda activate mujoco_rl 
 pip install -r requirements.txt 
 ``` 
-- If you use [venv](https://docs.python.org/3/library/venv.html) 
+- If you use [venv](https://docs.python.org/3/library/venv.html)  virtual environment
     - **Windows** : 
     ```bash 
     py -3.10 -m venv .venv

@@ -11,9 +11,9 @@ env:
 
 train:
   run_name: SAC_${env.name}
-  total_timesteps: 50000
-  memory_size: 10000
-  batch_size: 32
+  total_timesteps: 300000
+  memory_size: 100000
+  batch_size: 128
   optimizer:
     name: Adam
     actor_lr: 0.003
@@ -34,11 +34,6 @@ eval:
   save_every: 1000
   log_every: 200
   eval_episodes: 10
-
-normalizer:
-  normalize_obs: false 
-  obs_norm_clip: 10.0
-  obs_norm_epsilon: 1.0e-8
 
 dir:
   root: .
