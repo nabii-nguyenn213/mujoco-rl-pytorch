@@ -125,6 +125,7 @@ python utils/verify_setup.py
     ├── logger.py
     ├── mpi_utils.py
     ├── plotter.py
+    ├── visualizer.py # <---- demo 
     └── verify_setup.py
 ```
 
