@@ -101,14 +101,7 @@ python utils/verify_setup.py
 │   │   │           ├── rank_2
 │   │   │           └── rank_3
 │   │   └── PPO 
-│   └── tensorboard_logs    # <---- TensorBoard Logging
-│       └── SAC
-│           └── Hopper-v5
-│               └── SAC_Hopper-v5_20260408_170139
-│                   ├── rank_0
-│                   ├── rank_1
-│                   ├── rank_2
-│                   └── rank_3
+│   └── tensorboard_logs    # <---- TensorBoard Logging Directory
 ├── main.py
 ├── README.md
 ├── requirements.txt
