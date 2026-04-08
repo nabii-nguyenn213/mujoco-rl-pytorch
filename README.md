@@ -186,6 +186,8 @@ tensorboard --logdir logs/tensorboard_logs/SAC/Hopper-v5/SAC_Hopper_20260408_163
 | SAC | ![]() | ![]() | ![]()|
 | PPO | ![]() | ![]() | ![]()|
 
+- The configurations used to train these agents are presented in [results/configurations.md](results/configurations.md)
+
 # Demonstration
 - Visualize trained agent 
 ```bash 
