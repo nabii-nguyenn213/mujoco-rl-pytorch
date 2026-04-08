@@ -73,7 +73,7 @@ python main.py --agent SAC --env Hopper-v5
 | | Description | Available value | Default value | 
 | --- | --------| --------------- | ------------- | 
 | `--agent` | Select agent to train | [`SAC`, `PPO`] | `SAC` | 
-| `--env`   | Select environments   | All Mujoco environments available on Gymnasium | in configuration file | 
+| `--env`   | Select environments   | [Mujoco environments](https://gymnasium.farama.org/environments/mujoco/) | in [configuration file](configs/SAC.yaml) | 
 
 - Train agent with [MPI](https://docs.open-mpi.org/en/v5.0.x/installing-open-mpi/quickstart.html) : train multiple agents with multiple seeds in parallel 
 ```bash 
