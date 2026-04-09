@@ -426,7 +426,7 @@ class Plotter:
 
 def get_parser(): 
     args = argparse.ArgumentParser()
-    args.add_argument("--csv", type=str, default="results/plots/SAC/InvertedDoublePendulum-v5")
+    args.add_argument("--csv", type=str, default="results/plots/Reacher-v5")
     args.add_argument("--save", type=str, default="assets/plots/SAC/")
     return args.parse_args()
 
@@ -456,7 +456,7 @@ if __name__ == "__main__":
     # plotter.plot_metric("run-.-tag-episode_return_rank_2.csv", save_name="Hopper_SAC")
     # plotter.plot_metric("run-.-tag-episode_return_rank_3.csv", save_name="Hopper_SAC")
 
-    plotter.plot_episode_return_all(smooth_window=0, legends=["rank_0",
+    plotter.plot_episode_return_all(smooth_window=20, legends=["rank_0",
                                                               "rank_1", 
                                                               "rank_2", 
                                                               "rank_3" 

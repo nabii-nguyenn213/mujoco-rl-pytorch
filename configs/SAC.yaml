@@ -1,26 +1,26 @@
 env:
-  name: Hopper-v5
+  name: Swimmer-v5
   max_episode_steps: 0
   reward_scaler: 1.0
-  action_lim: 1.0 
+  action_lim: 1.0
   kwargs: {}
     
 train:
   run_name: SAC_${env.name}
-  total_timesteps: 500000
-  memory_size: 200000
+  total_timesteps: 150000
+  memory_size: 100000
   batch_size: 128
   optimizer:
     name: Adam
     actor_lr: 0.0003
     critic_lr: 0.0003
-  learning_start: 5000
+  learning_start: 1000
   tau: 0.005
   gamma: 0.99
   alpha: 0.2
   show_tb: true
   device: auto
-  hidden_size_actor: [128, 128]
+  hidden_size_actor: [256, 256]
   hidden_size_critic: [256, 256]
   seed: 42
   gradient_step: 1
@@ -33,8 +33,8 @@ eval:
 
 dir:
   root: .
-  log: ${dir.root}/logs/log/SAC/${env.name}
-  ckpt: ${dir.root}/results/checkpoints/SAC/${env.name}
-  model: ${dir.root}/results/models/SAC/${env.name}
-  best: ${dir.root}/results/best/SAC/${env.name}
-  tensorboard: ${dir.root}/logs/tensorboard_logs/SAC/${env.name}
+  log: ${dir.root}/logs/log/${env.name}
+  ckpt: ${dir.root}/results/checkpoints/${env.name}
+  model: ${dir.root}/results/models/${env.name}
+  best: ${dir.root}/results/best/${env.name}
+  tensorboard: ${dir.root}/logs/tensorboard_logs/${env.name}

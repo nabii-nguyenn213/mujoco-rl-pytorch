@@ -11,70 +11,54 @@ if str(PROJECT_ROOT) not in sys.path:
 
 from envs.env import make_env_demo
 from agents.SAC import SAC_Agent
-from agents.PPO import PPO_Agent
 from utils.helper import loadConfig, dir_exist, file_exist
 
 
 def getParser():
-    """
-    Example Usage
-
-    # Load best agent
-    python utils/visualizer.py --agent SAC --env Hopper-v5 --runid 20260408_163845 --loadOption best
-
-    # Load final agent
-    python utils/visualizer.py --agent SAC --env Hopper-v5 --runid 20260408_163845 --loadOption final
-
-    # Load checkpoint agent
-    python utils/visualizer.py --agent SAC --env Hopper-v5 --runid 20260408_163845 --loadOption checkpoint_100000
-
-    # Load checkpoint agent for MPI rank 0
-    python utils/visualizer.py --agent SAC --env Hopper-v5 --runid 20260408_163845 --loadOption checkpoint_100000 --rank 0
-    """
     parser = argparse.ArgumentParser()
-    parser.add_argument("--agent", type=str, default="SAC")
     parser.add_argument("--env", type=str, default="Hopper-v5")
     parser.add_argument("--runid", type=str, default=None)
     parser.add_argument("--loadOption", type=str, default="best")
     parser.add_argument("--rank", type=int, default=None)
     return parser.parse_args()
 
-def _normalize_agent_name(agent_name: str) -> str:
-    agent_name = agent_name.strip().upper()
-    if agent_name not in {"SAC", "PPO"}:
-        raise ValueError(f"Unsupported agent '{agent_name}'. Only SAC and PPO are supported.")
-    return agent_name
 
-
-def _get_base_root_from_load_option(agent_name: str, env_name: str, load_option: str) -> Path:
+def _get_base_root_from_load_option(env_name: str, load_option: str) -> Path:
     results_root = PROJECT_ROOT / "results"
 
     if load_option == "best":
-        return results_root / "best" / agent_name / env_name
+        return results_root / "best" / env_name
     elif load_option == "final":
-        return results_root / "models" / agent_name / env_name
+        return results_root / "models" / env_name
     elif load_option.startswith("checkpoint_"):
-        return results_root / "checkpoints" / agent_name / env_name
+        # your new path says "checkpoint" (singular)
+        return results_root / "checkpoint" / env_name
     else:
         raise ValueError("Only support `best`, `final` and `checkpoint_<step>`")
 
 
-def _get_log_root(agent_name: str, env_name: str) -> Path:
-    return PROJECT_ROOT / "logs" / "log" / agent_name / env_name
+def _get_log_root(env_name: str) -> Path:
+    """
+    New expected log root:
+        logs/log/<env_name>/
+
+    If your logs are stored somewhere else, change this only.
+    """
+    return PROJECT_ROOT / "logs" / "log" / env_name
 
 
-def _resolve_run_dir(base_root: Path, agent_name: str, env_name: str, run_id: str, rank=None) -> Path:
+def _resolve_run_dir(base_root: Path, run_id: str, rank=None) -> Path:
     if not dir_exist(str(base_root)):
         raise FileNotFoundError(f"Base directory not found: {base_root}")
 
     candidates = [
         base_root / run_id,
-        base_root / f"{agent_name}_{env_name}_{run_id}",
     ]
     candidates.extend(sorted(base_root.glob(f"*{run_id}*")))
 
     existing = []
     seen = set()
+
     for path in candidates:
         key = str(path.resolve()) if path.exists() else str(path)
         if key in seen:
@@ -87,7 +71,7 @@ def _resolve_run_dir(base_root: Path, agent_name: str, env_name: str, run_id: st
         raise FileNotFoundError(
             f"Could not find a run directory under:\n{base_root}\n\n"
             f"Expected something like:\n"
-            f"  {agent_name}_{env_name}_{run_id}"
+            f"  {run_id}"
         )
 
     if len(existing) > 1:
@@ -112,20 +96,18 @@ def _resolve_run_dir(base_root: Path, agent_name: str, env_name: str, run_id: st
     return run_dir
 
 
-def _resolve_checkpoint_path(run_dir: Path, agent_name: str, load_option: str) -> Path:
-    agent_prefix = agent_name.lower()
-
+def _resolve_checkpoint_path(run_dir: Path, load_option: str) -> Path:
     if load_option == "best":
-        model_path = run_dir / f"{agent_prefix}_best.pt"
+        model_path = run_dir / "sac_best.pt"
     elif load_option == "final":
-        model_path = run_dir / f"{agent_prefix}_final.pt"
+        model_path = run_dir / "sac_final.pt"
     elif load_option.startswith("checkpoint_"):
         step = load_option.split("_", 1)[1].strip()
         if not step.isdigit():
             raise ValueError(
                 "Checkpoint format must be checkpoint_<step>, for example checkpoint_100000"
             )
-        model_path = run_dir / f"{agent_prefix}_step_{step}.pt"
+        model_path = run_dir / f"sac_step_{step}.pt"
     else:
         raise ValueError("Only support `best`, `final` and `checkpoint_<step>`")
 
@@ -135,19 +117,20 @@ def _resolve_checkpoint_path(run_dir: Path, agent_name: str, load_option: str) -
     return model_path
 
 
-def _find_saved_run_config(agent_name: str, env_name: str, run_id: str, rank=None):
-    log_root = _get_log_root(agent_name, env_name)
+def _find_saved_run_config(env_name: str, run_id: str, rank=None):
+    log_root = _get_log_root(env_name)
     if not dir_exist(str(log_root)):
         return None
 
     try:
-        run_log_dir = _resolve_run_dir(log_root, agent_name, env_name, run_id, rank=rank)
+        run_log_dir = _resolve_run_dir(log_root, run_id, rank=rank)
     except Exception:
         return None
 
     config_files = sorted(run_log_dir.glob("*_config.yaml"))
     if len(config_files) == 0:
         return None
+
     return config_files[0]
 
 
@@ -166,13 +149,13 @@ def _sanitize_env_kwargs(env_name: str, env_kwargs):
         return {}
 
 
-def _build_config(agent_name: str, env_name: str, run_id: str, rank=None):
-    saved_config_path = _find_saved_run_config(agent_name, env_name, run_id, rank=rank)
+def _build_config(env_name: str, run_id: str, rank=None):
+    saved_config_path = _find_saved_run_config(env_name, run_id, rank=rank)
 
     if saved_config_path is not None:
         config = loadConfig(str(saved_config_path))
     else:
-        config_path = PROJECT_ROOT / "configs" / f"{agent_name}.yaml"
+        config_path = PROJECT_ROOT / "configs" / "SAC.yaml"
         config = loadConfig(str(config_path))
 
     config["dir"]["root"] = str(PROJECT_ROOT)
@@ -184,12 +167,8 @@ def _build_config(agent_name: str, env_name: str, run_id: str, rank=None):
     return config
 
 
-def _build_agent(agent_name: str, config):
-    if agent_name == "SAC":
-        return SAC_Agent(config)
-    if agent_name == "PPO":
-        return PPO_Agent(config)
-    raise ValueError(f"Unsupported agent '{agent_name}'")
+def _build_agent(config):
+    return SAC_Agent(config)
 
 
 def _policy_to_env_action(env, policy_action, policy_action_lim=1.0):
@@ -209,23 +188,24 @@ def _policy_to_env_action(env, policy_action, policy_action_lim=1.0):
     return np.clip(env_action, low, high)
 
 
-def visualize(agent_name: str, env_name: str, run_id: str, load_option: str, rank=None):
-    config = _build_config(agent_name, env_name, run_id, rank=rank)
+def visualize(env_name: str, run_id: str, load_option: str, rank=None):
+    config = _build_config(env_name, run_id, rank=rank)
 
-    base_root = _get_base_root_from_load_option(agent_name, env_name, load_option)
-    run_dir = _resolve_run_dir(base_root, agent_name, env_name, run_id, rank=rank)
-    checkpoint_path = _resolve_checkpoint_path(run_dir, agent_name, load_option)
+    base_root = _get_base_root_from_load_option(env_name, load_option)
+    run_dir = _resolve_run_dir(base_root, run_id, rank=rank)
+    checkpoint_path = _resolve_checkpoint_path(run_dir, load_option)
 
     env_kwargs = config["env"].get("kwargs", {}) or {}
     max_episode_steps = int(config["env"].get("max_episode_steps", 0))
     num_episodes = int(config.get("eval", {}).get("eval_episodes", 3))
     seed = int(config["train"].get("seed", 42))
+
     if rank is not None:
         seed += rank
 
     policy_action_lim = float(config["env"].get("action_lim", 1.0))
 
-    agent = _build_agent(agent_name, config)
+    agent = _build_agent(config)
     agent.load_model(str(checkpoint_path))
 
     env = make_env_demo(
@@ -234,7 +214,6 @@ def visualize(agent_name: str, env_name: str, run_id: str, load_option: str, ran
         **env_kwargs,
     )
 
-    print(f"Loaded agent      : {agent_name}")
     print(f"Environment       : {env_name}")
     print(f"Run directory     : {run_dir}")
     print(f"Checkpoint loaded : {checkpoint_path}")
@@ -255,10 +234,7 @@ def visualize(agent_name: str, env_name: str, run_id: str, load_option: str, ran
                 pass
 
             while not done:
-                if agent_name == "SAC":
-                    policy_action = agent.act(obs, deterministic=True)
-                else:
-                    policy_action, _, _ = agent.act(obs, deterministic=True)
+                policy_action = agent.act(obs, deterministic=True)
 
                 env_action = _policy_to_env_action(
                     env=env,
@@ -288,7 +264,6 @@ def visualize(agent_name: str, env_name: str, run_id: str, load_option: str, ran
 if __name__ == "__main__":
     args = getParser()
 
-    agent = _normalize_agent_name(args.agent)
     env_name = args.env
     run_id = args.runid
     load_option = args.loadOption
@@ -298,7 +273,6 @@ if __name__ == "__main__":
         raise ValueError("'--runid' flag must be provided.")
 
     visualize(
-        agent_name=agent,
         env_name=env_name,
         run_id=run_id,
         load_option=load_option,

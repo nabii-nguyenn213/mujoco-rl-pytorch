@@ -9,7 +9,6 @@ import time
 import argparse
 from utils.helper import loadConfig
 from train.train_SAC import SAC
-from train.train_PPO import PPO
 from utils.mpi_utils import get_rank, get_world_size
 
 import torch
@@ -19,32 +18,21 @@ torch.set_num_interop_threads(1)
 
 def get_args(): 
     parser = argparse.ArgumentParser()
-    parser.add_argument("--agent", type=str, default="SAC")
     parser.add_argument("--env", type=str, default=None)
     return parser.parse_args()
 
 if __name__ == "__main__":
     args = get_args()
-    train_agent = args.agent
-    configDir = "configs/SAC.yaml" if train_agent.lower() == "sac" else "configs/PPO.yaml"
+    configDir = "configs/SAC.yaml" 
     config = loadConfig(configDir=configDir)
     if args.env is not None: 
         config["env"]["name"] = args.env
     start_time = time.perf_counter()
-    if train_agent.lower() == "sac":
-        if get_world_size() == 1: 
-            exp = SAC(config)
-        else: 
-            exp = SAC(config, rank=get_rank())
-        exp.run()
-    elif train_agent.lower() == "ppo": 
-        if get_world_size()==1: 
-            exp = PPO(config) 
-        else: 
-            exp = PPO(config, rank=get_rank())
-        exp.run()
+    if get_world_size() == 1: 
+        exp = SAC(config)
     else: 
-        raise ValueError(f"Unsupported train type {train_agent}")
+        exp = SAC(config, rank=get_rank())
+    exp.run()
     end_time = time.perf_counter() - start_time
     if get_world_size() == 1:
         print(f"Total runtime : {end_time}s")

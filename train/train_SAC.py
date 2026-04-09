@@ -114,7 +114,7 @@ class SAC(TrainAgent):
                     self.logger.log_train(
                         step=self.global_step,
                         metrics=self.last_log_info,
-                        print_to_console=(self.rank is None or self.rank == 0),
+                        print_to_console=True if self.rank is None or self.rank == 0 else False,
                     )
                 if self.global_step > 0 and self.global_step % self.save_every == 0:
                     ckpt_path = os.path.join(self.ckpt_dir, f"sac_step_{self.global_step}.pt")

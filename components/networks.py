@@ -89,7 +89,7 @@ class VCriticNetwork(nn.Module):
     def __init__(self, obs_dim, hidden_size=[32, 32], 
                  hidden_act="ReLU", output_act="Linear"): 
         super().__init__()
-        layer_dims = [obs_dim, *hidden_size]
+        layer_dims = [obs_dim, *hidden_size, 1]
         self.vnet = MLP(layer_dims, hidden_act, output_act)
 
     def forward(self, obs): 
@@ -114,20 +114,17 @@ class ActorVCriticNetwork(nn.Module):
     def getValue(self, obs): 
         return self.critic(obs).squeeze(-1)
 
-    def evaluate_actions(self, obs, action): 
-        scaled_action = action / self.actor.action_lim 
-        scaled_action = torch.clamp(scaled_action, -1.0 + EPS, 1.0 - EPS)
-        u = atanh(scaled_action)
+    def evaluate_actions(self, obs, action):
         mu, log_std = self.actor.forward(obs)
         std = torch.exp(log_std)
         dist = Normal(mu, std)
-        log_prob_u = dist.log_prob(u).sum(dim=-1)
-        log_det_jacobian = torch.log(1.0 - scaled_action.pow(2) + EPS).sum(dim=-1)
-        log_prob = log_prob_u - log_det_jacobian
+
+        log_prob = dist.log_prob(action).sum(dim=-1)
         entropy = dist.entropy().sum(dim=-1)
         value = self.getValue(obs)
-        return log_prob, entropy, value
 
+        return log_prob, entropy, value
+    
 class ActorDoubleQCriticNetwork(nn.Module): 
     def __init__(self, obs_dim, act_dim, action_lim=1.0, 
                  hidden_size_actor=[32, 32], hidden_size_critic=[32, 32], 
