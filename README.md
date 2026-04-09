@@ -21,19 +21,19 @@ This repo implements the **Soft Actor-Critic** (SAC) algorithms using [PyTorch](
 | Action Space | (2,) | (2,) | (6,) |
 | Observation Space| (10,) | (8,) | (17,) |
 
-| Environment               | Solved return | Tested | 
-|---------------------------|--------------:|:------:|
-| Reacher-v5                |         -3.75 |   [x]  |
-| Pusher-v5                 |          0.0  |   [ ]  |
-| InvertedPendulum-v5       |        950.0  |   [x]  |
-| InvertedDoublePendulum-v5 |       9100.0  |   [x]  |
-| HalfCheetah-v5            |       4800.0  |   [x]  |
-| Hopper-v5                 |       3800.0  |   [x]  |
-| Swimmer-v5                |        360.0  |   [ ]  |
-| Walker2d-v5               | N/A           |   [ ]  |
-| Ant-v5                    |       6000.0  |   [ ]  |
-| Humanoid-v5               | N/A           |   [ ]  |
-| HumanoidStandup-v5        | N/A           |   [ ]  |
+| Environment               | Solved return | Tested                          | 
+|---------------------------|--------------:|:-------------------------------:|
+| Reacher-v5                |         -3.75 |   <ul><li>- [x] item1</li></ul> |
+| Pusher-v5                 |          0.0  |   <ul><li>- [ ] item1</li></ul> |
+| InvertedPendulum-v5       |        950.0  |   <ul><li>- [x] item1</li></ul> |
+| InvertedDoublePendulum-v5 |       9100.0  |   <ul><li>- [x] item1</li></ul> |
+| HalfCheetah-v5            |       4800.0  |   <ul><li>- [x] item1</li></ul> |
+| Hopper-v5                 |       3800.0  |   <ul><li>- [x] item1</li></ul> |
+| Swimmer-v5                |        360.0  |   <ul><li>- [ ] item1</li></ul> |
+| Walker2d-v5               | N/A           |   <ul><li>- [ ] item1</li></ul> |
+| Ant-v5                    |       6000.0  |   <ul><li>- [ ] item1</li></ul> |
+| Humanoid-v5               | N/A           |   <ul><li>- [ ] item1</li></ul> |
+| HumanoidStandup-v5        | N/A           |   <ul><li>- [ ] item1</li></ul> |
 > `Solved return` is the official Gymnasium `reward_threshold` when one is registered 
 
 # Dependencies & Installation 
