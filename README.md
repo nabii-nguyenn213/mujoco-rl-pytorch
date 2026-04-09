@@ -192,7 +192,7 @@ tensorboard --logdir logs/tensorboard_logs/SAC/Hopper-v5/SAC_Hopper_20260408_163
 
 | | [Reacher](https://gymnasium.farama.org/environments/mujoco/reacher/) | [Swimmer](https://gymnasium.farama.org/environments/mujoco/swimmer/) | [Walker2D](https://gymnasium.farama.org/environments/mujoco/walker2d/) | 
 | --- | ------ | ---------------- | --------------------------------------- | 
-| SAC | ![]() | ![]() | ![]()|
+| SAC | ![](assets/plots/SAC/reacher_episode_return_compare.png) | ![]() | ![]()|
 | PPO | ![]() | ![]() | ![]()|
 
 - The configurations used to train these agents are presented in [results/configurations.md](results/configurations.md)

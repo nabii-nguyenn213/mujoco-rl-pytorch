@@ -78,12 +78,30 @@
 ## Reacher-v5 
 | Parameter             |   Value |
 | ----------------------| ------: | 
-|  |  | 
+| `reward_scaler`       | `1.0`      | 
+| `action_lim`          | `1.0`      | 
+| `total_timesteps`     |`100_000`   | 
+| `memory_size`         |`50_000`    | 
+| `batch_size`          |`128`       | 
+| `learning_start`      |`1_000`     | 
+| `hidden_size_actor`   |`[64, 64]`  | 
+| `hidden_size_critic`  |`[128, 128]`| 
+| `actor_lr`            |`0.0003`    | 
+| `critic_lr`           |`0.0003`    | 
 
 ## Swimmer-v5 
 | Parameter             |   Value |
 | ----------------------| ------: | 
-|  |  | 
+| `reward_scaler`       | `1.0`      | 
+| `action_lim`          | `1.0`      | 
+| `total_timesteps`     |`100_000`   | 
+| `memory_size`         |`50_000`    | 
+| `batch_size`          |`128`       | 
+| `learning_start`      |`1_000`     | 
+| `hidden_size_actor`   |`[256, 256]`  | 
+| `hidden_size_critic`  |`[256, 256]`| 
+| `actor_lr`            |`0.0003`    | 
+| `critic_lr`           |`0.0003`    | 
 
 ## Walker2d-v5
 | Parameter             |   Value |
