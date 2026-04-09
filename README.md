@@ -86,7 +86,6 @@ python main.py --env Hopper-v5
 ``` 
 | Flag      | Description           | Available value | Default value | 
 | --------- | ----------------------| --------------- | ------------- | 
-| `--agent` | Select agent to train | [`SAC`, `PPO`]  | `SAC`         | 
 | `--env`   | Select environments   | [Mujoco environments](https://gymnasium.farama.org/environments/mujoco/) | in [configuration file](configs/SAC.yaml) | 
 
 - Train agent with [MPI](https://docs.open-mpi.org/en/v5.0.x/installing-open-mpi/quickstart.html) : train multiple agents with multiple seeds in parallel 
@@ -97,7 +96,6 @@ mpirun -n 4 python main.py --env Hopper-v5
 - `-n` : The number of processes/seeds (MPI ranks) used for parallel agent training.
 
 ## Description of Configuration Parameters 
-The project supports both Soft Actor-Critic (SAC) and Proximal Policy Optimization (PPO). Some configuration parameters are shared, while others are specific to either off-policy SAC or on-policy PPO.
 
 | Parameter        | Description                             | Example Value   |
 | ---------------- | --------------------------------------- | --------------- |
