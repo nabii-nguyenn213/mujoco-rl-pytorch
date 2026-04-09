@@ -21,19 +21,19 @@ This repo implements the **Soft Actor-Critic** (SAC) algorithms using [PyTorch](
 | Action Space | (2,) | (2,) | (6,) |
 | Observation Space| (10,) | (8,) | (17,) |
 
-| Environment               | Solved return | Tested                          | 
-|---------------------------|--------------:|:-------------------------------:|
-| Reacher-v5                |         -3.75 |   <ul><li>[x]</li></ul> |
-| Pusher-v5                 |          0.0  |   <ul><li>[ ]</li></ul> |
-| InvertedPendulum-v5       |        950.0  |   <ul><li>[x]</li></ul> |
-| InvertedDoublePendulum-v5 |       9100.0  |   <ul><li>[x]</li></ul> |
-| HalfCheetah-v5            |       4800.0  |   <ul><li>[x]</li></ul> |
-| Hopper-v5                 |       3800.0  |   <ul><li>[x]</li></ul> |
-| Swimmer-v5                |        360.0  |   <ul><li>[ ]</li></ul> |
-| Walker2d-v5               | N/A           |   <ul><li>[ ]</li></ul> |
-| Ant-v5                    |       6000.0  |   <ul><li>[ ]</li></ul> |
-| Humanoid-v5               | N/A           |   <ul><li>[ ]</li></ul> |
-| HumanoidStandup-v5        | N/A           |   <ul><li>[ ]</li></ul> |
+| Environment               | Solved return |
+|---------------------------|--------------:|
+| Reacher-v5                |         -3.75 |
+| Pusher-v5                 |          0.0  |
+| InvertedPendulum-v5       |        950.0  |
+| InvertedDoublePendulum-v5 |       9100.0  |
+| HalfCheetah-v5            |       4800.0  |
+| Hopper-v5                 |       3800.0  |
+| Swimmer-v5                |        360.0  |
+| Walker2d-v5               | N/A           |
+| Ant-v5                    |       6000.0  |
+| Humanoid-v5               | N/A           |
+| HumanoidStandup-v5        | N/A           |
 > `Solved return` is the official Gymnasium `reward_threshold` when one is registered 
 
 # Dependencies & Installation 
