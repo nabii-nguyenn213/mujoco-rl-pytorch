@@ -198,7 +198,8 @@ tensorboard --logdir logs/tensorboard_logs/SAC/Hopper-v5/SAC_Hopper_20260408_163
 - The configurations used to train these agents are presented in [results/configurations.md](results/configurations.md)
 
 # Demonstration
-- Visualize trained agent 
+## Run your own demo 
+Visualize trained agent 
 ```bash 
 # Example Usage 
 # Load best agent
@@ -217,3 +218,10 @@ python utils/visualizer.py --agent SAC --env Hopper-v5 --runid 20260408_163845 -
 | `--runid` | Trained agent's run ID   | Timestamp in logs | `None` (must be provided) | 
 | `--loadOption` | Choose Load Option  | [`best`, `final`, `checkpoint_[timestep]`] | `best` | 
 | `--rank` | Choose rank   | range(`0` to `n`) based on `mpirun` | `None` | 
+
+## Some trained agent demos
+| | Ant | Humanoid | HumanoidStandup | Walker2D | 
+| --- | ------ | ---------------- | --------------------------------------- | 
+| SAC | ![]() | ![]() | ![]() | ![]()|
+| PPO | ![]() | ![]() | ![]() | ![]()|
+
