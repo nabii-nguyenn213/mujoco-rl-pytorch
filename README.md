@@ -1,4 +1,4 @@
-# Soft Actor Critic and Proximal Policy Optimization Implementation with PyTorch 
+# Soft Actor Critic Implementation with PyTorch 
 This repo implements the **Soft Actor-Critic** (SAC) algorithms using [PyTorch](https://pytorch.org/) on **Mujoco** environments in [Gymnasium](https://gymnasium.farama.org/environments/mujoco/)
 
 # Environments 
