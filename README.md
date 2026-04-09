@@ -156,5 +156,5 @@ python utils/visualizer.py --env Hopper-v5 --runid 20260408_163845 --loadOption 
 ## Agent Demo Results
 | Ant | Humanoid | HumanoidStandup | Walker2D | 
 | --- | ------ | ---------------- | --------------------------------------- | 
-| ![]() | ![]() | ![]() | ![]()|
+| ![]() | ![]() | ![]() | ![](assets/demos/walker2d.gif)|
 
