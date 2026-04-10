@@ -139,11 +139,15 @@ python utils/visualizer.py --env Hopper-v5 --runid 20260408_163845 --loadOption 
 | Flag      | Description           | Available value | Default value | 
 | --------- | --------------------- | --------------- | ------------- | 
 | `--env`   | Select environments   | [Mujoco environments](https://gymnasium.farama.org/environments/mujoco/) | `Hopper-v5` | 
-| `--runid` | Trained agent's run ID   | Timestamp in logs | `None` (must be provided) | 
+| `--runid` | Trained agent's run ID   | Timestamp in logs | `None` **(must be provided)** | 
 | `--loadOption` | Choose Load Option  | [`best`, `final`, `checkpoint_[timestep]`] | `best` | 
 | `--rank` | Choose rank   | range(`0` to `n`) based on `mpirun` | `None` | 
 
 ## Agent Demo Results
+| Hopper | HalfCheetah |
+| ------ | ----------------- |
+![](assets/demos/hopper.gif) | ![](assets/demos/halfcheetah.gif) |
+
 | Ant | Walker2D | 
 | --- |--------- | 
 | ![](assets/demos/ant.gif) | ![](assets/demos/walker2d.gif)|

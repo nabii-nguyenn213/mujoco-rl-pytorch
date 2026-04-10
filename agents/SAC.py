@@ -16,7 +16,7 @@ class SAC_Agent:
         self.gamma = config["train"]["gamma"]
         self.tau   = config["train"]["tau"]
         
-        self.auto_alpha = config["train"]["auto_alpha"]
+        self.auto_alpha = config["train"].get("auto_alpha", False)
         self.fixed_alpha = float(config["train"].get("alpha", 0.2))
         self.alpha = torch.tensor(self.fixed_alpha, device=self.device)
 
@@ -174,7 +174,7 @@ class SAC_Agent:
         self.crtic1_optimizer.load_state_dict(model["critic1_optim"])
         self.crtic2_optimizer.load_state_dict(model["critic2_optim"])
 
-        if self.autotune_alpha and "log_alpha" in model:
+        if self.auto_alpha and "log_alpha" in model:
             self.log_alpha.data.copy_(model["log_alpha"].to(self.device))
             self.alpha_optimizer.load_state_dict(model["alpha_optim"])
             self.alpha = self.log_alpha.exp().detach()
