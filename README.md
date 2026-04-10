@@ -116,6 +116,11 @@ mpirun -n 4 python main.py --env Hopper-v5
 tensorboard --logdir logs/tensorboard_logs/Hopper-v5/SAC_Hopper_20260408_163845/
 ```
 
+- Or using TensorBoard to visualize results during traninig: 
+```bash 
+./utils/run_current_tensorboard.sh
+```
+
 # Results 
 | [Ant](https://gymnasium.farama.org/environments/mujoco/ant/) | [HalfCheetah](https://gymnasium.farama.org/environments/mujoco/half_cheetah/) | [Hopper](https://gymnasium.farama.org/environments/mujoco/hopper/) | [Humanoid](https://gymnasium.farama.org/environments/mujoco/humanoid/) |
 | ---------------- | ------------------ | --------------------------------------- | --------------- |
