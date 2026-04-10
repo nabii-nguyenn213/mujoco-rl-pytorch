@@ -73,9 +73,17 @@
 | `critic_lr`           |`0.0003`  | 
 
 ## Pusher-v5 
-| Parameter             |   Value |
-| ----------------------| ------: | 
-|  |  | 
+| Parameter             |   Value    |
+| ----------------------| ---------: | 
+| `reward_scaler`       | `1.0`      | 
+| `total_timesteps`     |`200_000`   | 
+| `memory_size`         |`1_000_000` | 
+| `batch_size`          |`256`       | 
+| `learning_start`      |`10_000`    | 
+| `hidden_size_actor`   |`[256, 256]`| 
+| `hidden_size_critic`  |`[256, 256]`| 
+| `actor_lr`            |`0.0003`    | 
+| `critic_lr`           |`0.0003`    | 
 
 ## Reacher-v5 
 | Parameter             |   Value    |
