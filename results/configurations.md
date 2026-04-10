@@ -2,7 +2,6 @@
 | Parameter             |   Value    |
 | ----------------------| ---------: | 
 | `reward_scaler`       | `1.0`      | 
-| `action_lim`          | `1.0`      | 
 | `total_timesteps`     |`1_000_000` | 
 | `memory_size`         |`1_000_000` | 
 | `batch_size`          |`256`       | 
@@ -15,7 +14,6 @@
 | Parameter             |   Value    |
 | ----------------------| ---------: | 
 | `reward_scaler`       | `1.0`      | 
-| `action_lim`          | `1.0`      | 
 | `total_timesteps`     |`500_000`   | 
 | `memory_size`         |`200_000`   | 
 | `batch_size`          |`128`       | 
@@ -29,7 +27,6 @@
 | Parameter             |   Value    |
 | ----------------------| ---------: | 
 | `reward_scaler`       | `1.0`      | 
-| `action_lim`          | `1.0`      | 
 | `total_timesteps`     |`500_000`   | 
 | `memory_size`         |`200_000`   | 
 | `batch_size`          |`128`       | 
@@ -53,7 +50,6 @@
 | Parameter             |   Value    |
 | ----------------------| ---------: | 
 | `reward_scaler`       | `1.0`      | 
-| `action_lim`          | `1.0`      | 
 | `total_timesteps`     |`60_000`    | 
 | `memory_size`         |`200_000`   | 
 | `batch_size`          |`128`       | 
@@ -67,7 +63,6 @@
 | Parameter             |   Value  |
 | ----------------------| -------: | 
 | `reward_scaler`       | `1.0`    | 
-| `action_lim`          | `3.0`    | 
 | `total_timesteps`     |`60_000`  | 
 | `memory_size`         |`100_000` | 
 | `batch_size`          |`128`     | 
@@ -86,7 +81,6 @@
 | Parameter             |   Value    |
 | ----------------------| ---------: | 
 | `reward_scaler`       | `1.0`      | 
-| `action_lim`          | `1.0`      | 
 | `total_timesteps`     |`100_000`   | 
 | `memory_size`         |`50_000`    | 
 | `batch_size`          |`128`       | 
@@ -100,7 +94,6 @@
 | Parameter             |   Value    |
 | ----------------------| ---------: | 
 | `reward_scaler`       | `1.0`      | 
-| `action_lim`          | `1.0`      | 
 | `total_timesteps`     |`100_000`   | 
 | `memory_size`         |`50_000`    | 
 | `batch_size`          |`128`       | 
@@ -114,7 +107,6 @@
 | Parameter             |   Value    |
 | ----------------------| ---------: | 
 | `reward_scaler`       | `1.0`      | 
-| `action_lim`          | `1.0`      | 
 | `total_timesteps`     |`1_000_000` | 
 | `memory_size`         |`1_000_000` | 
 | `batch_size`          |`256`       | 

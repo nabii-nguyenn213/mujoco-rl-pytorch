@@ -426,7 +426,7 @@ class Plotter:
 
 def get_parser(): 
     args = argparse.ArgumentParser()
-    args.add_argument("--csv", type=str, default="results/plots/Reacher-v5")
+    args.add_argument("--csv", type=str, default="results/plots/Ant-v5")
     args.add_argument("--save", type=str, default="assets/plots/SAC/")
     return args.parse_args()
 

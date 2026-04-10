@@ -37,7 +37,7 @@ class MLP(nn.Module):
         return self.mlp(x) 
 
 class ActorNetwork(nn.Module): 
-    def __init__(self, obs_dim, act_dim, action_lim=1.0, hidden_size=[32, 32], 
+    def __init__(self, obs_dim, act_dim, hidden_size=[32, 32], 
                  hidden_act="ReLU", output_act="Linear"): 
         super().__init__()
         layer_dims = [obs_dim, *hidden_size]
@@ -45,7 +45,6 @@ class ActorNetwork(nn.Module):
 
         self.mu = nn.Linear(layer_dims[-1], act_dim) 
         self.log_std = nn.Linear(layer_dims[-1], act_dim) 
-        self.action_lim = action_lim
 
     def forward(self, obs): 
         h = self.net(obs) 
@@ -57,19 +56,19 @@ class ActorNetwork(nn.Module):
     @torch.no_grad() 
     def act_deterministic(self, obs): 
         mu, _ = self.forward(obs) 
-        return torch.tanh(mu) * self.action_lim
+        return torch.tanh(mu) 
 
     def sample(self, obs): 
         mu, log_std = self.forward(obs)
         std = torch.exp(log_std) 
         dist = Normal(mu, std) 
         u = dist.rsample() 
-        a_tanh = torch.tanh(u) 
-        a = a_tanh * self.action_lim
+        a = torch.tanh(u)
+
         log_prob_u = dist.log_prob(u).sum(dim=-1, keepdim=True)
-        log_det_jacobian = torch.log(1.0 - a_tanh.pow(2) + EPS).sum(dim=-1, keepdim=True)
+        log_det_jacobian = torch.log(1.0 - a.pow(2) + EPS).sum(dim=-1, keepdim=True)
         log_prob = log_prob_u - log_det_jacobian
-        mu_action = torch.tanh(mu) * self.action_lim
+        mu_action = torch.tanh(mu)
         return a, log_prob, mu_action
 
 class QCriticNetwork(nn.Module): 
@@ -96,11 +95,11 @@ class VCriticNetwork(nn.Module):
         return self.vnet(obs)
 
 class ActorVCriticNetwork(nn.Module): 
-    def __init__(self, obs_dim, act_dim, action_lim=1.0,
+    def __init__(self, obs_dim, act_dim, 
                  hidden_size_actor=[32,32], hidden_size_critic=[32, 32],
                  hidden_act = "Tanh", output_act="Linear"): 
         super().__init__()
-        self.actor = ActorNetwork(obs_dim, act_dim, action_lim, hidden_size_actor, hidden_act, output_act)
+        self.actor = ActorNetwork(obs_dim, act_dim, hidden_size_actor, hidden_act, output_act)
         self.critic = VCriticNetwork(obs_dim, hidden_size_critic, hidden_act, output_act)
         
     def sample_action(self, obs): 
@@ -126,11 +125,11 @@ class ActorVCriticNetwork(nn.Module):
         return log_prob, entropy, value
 
 class ActorSingleQCriticNetwork(nn.Module): 
-    def __init__(self, obs_dim, act_dim, action_lim=1.0, 
+    def __init__(self, obs_dim, act_dim, 
                  hidden_size_actor=[32, 32], hidden_size_critic=[32, 32], 
                  hidden_act="ReLU", output_act="Linear"):
         super().__init__()
-        self.actor = ActorNetwork(obs_dim, act_dim, action_lim, hidden_size_actor, hidden_act, output_act)
+        self.actor = ActorNetwork(obs_dim, act_dim, hidden_size_actor, hidden_act, output_act)
         self.critic = QCriticNetwork(obs_dim, act_dim, hidden_size_critic, hidden_act, output_act)
 
     def sample_action(self, obs): 
@@ -144,11 +143,11 @@ class ActorSingleQCriticNetwork(nn.Module):
         return self.critic(obs, act)
 
 class ActorDoubleQCriticNetwork(nn.Module): 
-    def __init__(self, obs_dim, act_dim, action_lim=1.0, 
+    def __init__(self, obs_dim, act_dim, 
                  hidden_size_actor=[32, 32], hidden_size_critic=[32, 32], 
                  hidden_act="ReLU", output_act="Linear"):
         super().__init__()
-        self.actor = ActorNetwork(obs_dim, act_dim, action_lim, hidden_size_actor, hidden_act, output_act)
+        self.actor = ActorNetwork(obs_dim, act_dim, hidden_size_actor, hidden_act, output_act)
         self.critic1 = QCriticNetwork(obs_dim, act_dim, hidden_size_critic, hidden_act, output_act)
         self.critic2 = QCriticNetwork(obs_dim, act_dim, hidden_size_critic, hidden_act, output_act)
 
@@ -163,4 +162,3 @@ class ActorDoubleQCriticNetwork(nn.Module):
         q1 = self.critic1(obs, act) 
         q2 = self.critic2(obs, act) 
         return q1, q2
-

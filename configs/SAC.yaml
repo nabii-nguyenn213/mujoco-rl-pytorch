@@ -2,22 +2,25 @@ env:
   name: Swimmer-v5
   max_episode_steps: 0
   reward_scaler: 1.0
-  action_lim: 1.0
   kwargs: {}
     
 train:
   run_name: SAC_${env.name}
-  total_timesteps: 150000
+  total_timesteps: 500000
   memory_size: 100000
-  batch_size: 128
+  batch_size: 256
   optimizer:
     name: Adam
     actor_lr: 0.0003
     critic_lr: 0.0003
-  learning_start: 1000
+    alpha_lr : 0.0003    # only if auto_alpha == true
+  learning_start: 10000
   tau: 0.005
   gamma: 0.99
-  alpha: 0.2
+  auto_alpha: true 
+  target_entropy: auto
+  alpha: 0.2            # only if auto_alpha == false
+
   show_tb: true
   device: auto
   hidden_size_actor: [256, 256]

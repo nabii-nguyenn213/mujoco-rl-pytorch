@@ -93,14 +93,15 @@ class SAC(TrainAgent):
                 env_action = self._policy_to_env_action(policy_action)
 
                 next_obs, reward, terminated, truncated, info = self.env.step(env_action)
-                done = terminated or truncated
+                episode_done = terminated or truncated
+                done_for_boostrap = terminated
 
                 self.replay_buffer.store_transition(
                     state=self.obs,
                     action=policy_action,
                     reward=reward,
                     next_state=next_obs,
-                    done=done,
+                    done=done_for_boostrap,
                 )
                 self.obs = next_obs
                 self.episode_reward += reward
@@ -127,7 +128,7 @@ class SAC(TrainAgent):
                         best_path = os.path.join(self.best_dir, "sac_best.pt")
                         self._save(best_path)
                         self.logger.log_checkpoint(best_path, step=self.global_step, kind="best")
-                if done:
+                if episode_done:
                     episodic_return = info.get("episodic_return", self.episode_reward)
                     self.episode_idx += 1
                     self.logger.log_episode(

@@ -31,18 +31,18 @@ def _get_base_root_from_load_option(env_name: str, load_option: str) -> Path:
     elif load_option == "final":
         return results_root / "models" / env_name
     elif load_option.startswith("checkpoint_"):
-        # your new path says "checkpoint" (singular)
-        return results_root / "checkpoint" / env_name
+        # your path uses "checkpoints"
+        return results_root / "checkpoints" / env_name
     else:
         raise ValueError("Only support `best`, `final` and `checkpoint_<step>`")
 
 
 def _get_log_root(env_name: str) -> Path:
     """
-    New expected log root:
+    Expected log root:
         logs/log/<env_name>/
 
-    If your logs are stored somewhere else, change this only.
+    Change this only if your log folder layout changes.
     """
     return PROJECT_ROOT / "logs" / "log" / env_name
 
@@ -51,9 +51,7 @@ def _resolve_run_dir(base_root: Path, run_id: str, rank=None) -> Path:
     if not dir_exist(str(base_root)):
         raise FileNotFoundError(f"Base directory not found: {base_root}")
 
-    candidates = [
-        base_root / run_id,
-    ]
+    candidates = [base_root / run_id]
     candidates.extend(sorted(base_root.glob(f"*{run_id}*")))
 
     existing = []
@@ -171,7 +169,11 @@ def _build_agent(config):
     return SAC_Agent(config)
 
 
-def _policy_to_env_action(env, policy_action, policy_action_lim=1.0):
+def _policy_to_env_action(env, policy_action):
+    """
+    Policy action is assumed to be normalized in [-1, 1].
+    Map it once to the actual env action range.
+    """
     if not hasattr(env.action_space, "low") or not hasattr(env.action_space, "high"):
         return policy_action
 
@@ -179,12 +181,9 @@ def _policy_to_env_action(env, policy_action, policy_action_lim=1.0):
     low = np.asarray(env.action_space.low, dtype=np.float32)
     high = np.asarray(env.action_space.high, dtype=np.float32)
 
-    policy_action_lim = float(policy_action_lim)
-    if policy_action_lim <= 0:
-        policy_action_lim = 1.0
-
-    scaled = (policy_action + policy_action_lim) / (2.0 * policy_action_lim)
-    env_action = low + scaled * (high - low)
+    action_scale = 0.5 * (high - low)
+    action_bias = 0.5 * (high + low)
+    env_action = action_bias + action_scale * policy_action
     return np.clip(env_action, low, high)
 
 
@@ -202,8 +201,6 @@ def visualize(env_name: str, run_id: str, load_option: str, rank=None):
 
     if rank is not None:
         seed += rank
-
-    policy_action_lim = float(config["env"].get("action_lim", 1.0))
 
     agent = _build_agent(config)
     agent.load_model(str(checkpoint_path))
@@ -235,12 +232,7 @@ def visualize(env_name: str, run_id: str, load_option: str, rank=None):
 
             while not done:
                 policy_action = agent.act(obs, deterministic=True)
-
-                env_action = _policy_to_env_action(
-                    env=env,
-                    policy_action=policy_action,
-                    policy_action_lim=policy_action_lim,
-                )
+                env_action = _policy_to_env_action(env=env, policy_action=policy_action)
 
                 obs, reward, terminated, truncated, info = env.step(env_action)
                 done = terminated or truncated
