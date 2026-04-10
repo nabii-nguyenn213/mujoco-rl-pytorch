@@ -10,6 +10,7 @@
 | `hidden_size_critic`  |`[256, 256]`| 
 | `actor_lr`            |`0.0003`    | 
 | `critic_lr`           |`0.0003`    | 
+| `auto_alpha`          |`false`     |
 ## HalfCheetah-v5
 | Parameter             |   Value    |
 | ----------------------| ---------: | 
@@ -22,6 +23,7 @@
 | `hidden_size_critic`  |`[256, 256]`| 
 | `actor_lr`            |`0.0003`    | 
 | `critic_lr`           |`0.0003`    | 
+| `auto_alpha`          |`false`     |
 
 ## Hopper-v5 
 | Parameter             |   Value    |
@@ -35,6 +37,7 @@
 | `hidden_size_critic`  |`[256, 256]`| 
 | `actor_lr`            |`0.0003`    | 
 | `critic_lr`           |`0.0003`    | 
+| `auto_alpha`          |`false`     |
 
 ## Humanoid-v5 
 | Parameter             |   Value |
@@ -58,6 +61,7 @@
 | `hidden_size_critic`  |`[128, 128]`| 
 | `actor_lr`            |`0.0003`    | 
 | `critic_lr`           |`0.0003`    | 
+| `auto_alpha`          |`false`     |
 
 ## InvertedPendulum-v5
 | Parameter             |   Value  |
@@ -71,6 +75,7 @@
 | `hidden_size_critic`  |`[64, 64]`| 
 | `actor_lr`            |`0.0003`  | 
 | `critic_lr`           |`0.0003`  | 
+| `auto_alpha`          |`false`   |
 
 ## Pusher-v5 
 | Parameter             |   Value    |
@@ -84,6 +89,7 @@
 | `hidden_size_critic`  |`[256, 256]`| 
 | `actor_lr`            |`0.0003`    | 
 | `critic_lr`           |`0.0003`    | 
+| `auto_alpha`          |`true`      |
 
 ## Reacher-v5 
 | Parameter             |   Value    |
@@ -97,6 +103,7 @@
 | `hidden_size_critic`  |`[128, 128]`| 
 | `actor_lr`            |`0.0003`    | 
 | `critic_lr`           |`0.0003`    | 
+| `auto_alpha`          |`false`     |
 
 ## Swimmer-v5 
 | Parameter             |   Value    |
@@ -110,6 +117,7 @@
 | `hidden_size_critic`  |`[256, 256]`| 
 | `actor_lr`            |`0.0003`    | 
 | `critic_lr`           |`0.0003`    | 
+| `auto_alpha`          |`true`      |
 
 ## Walker2d-v5
 | Parameter             |   Value    |
@@ -123,4 +131,5 @@
 | `hidden_size_critic`  |`[256, 256]`| 
 | `actor_lr`            |`0.0003`    | 
 | `critic_lr`           |`0.0003`    | 
+| `auto_alpha`          |`false`     |
 
