@@ -119,7 +119,7 @@ tensorboard --logdir logs/tensorboard_logs/Hopper-v5/SAC_Hopper_20260408_163845/
 # Results 
 | [Ant](https://gymnasium.farama.org/environments/mujoco/ant/) | [HalfCheetah](https://gymnasium.farama.org/environments/mujoco/half_cheetah/) | [Hopper](https://gymnasium.farama.org/environments/mujoco/hopper/) | [Humanoid](https://gymnasium.farama.org/environments/mujoco/humanoid/) |
 | ---------------- | ------------------ | --------------------------------------- | --------------- |
-|![]() | ![](assets/plots/SAC/half_cheetah_episode_return_compare.png) | ![](assets/plots/SAC/hopper_episode_return_compare.png)| ![]() |
+|![](assets/plots/SAC/ant_episode_return_compare.png) | ![](assets/plots/SAC/half_cheetah_episode_return_compare.png) | ![](assets/plots/SAC/hopper_episode_return_compare.png)| ![]() |
 
 | [Humanoid Standup](https://gymnasium.farama.org/environments/mujoco/humanoid_standup/) | [Inverted Double Pendulum](https://gymnasium.farama.org/environments/mujoco/inverted_double_pendulum/#) | [Inverted Pendulum](https://gymnasium.farama.org/environments/mujoco/inverted_pendulum/) | [Pusher](https://gymnasium.farama.org/environments/mujoco/pusher/) |
 | ------ | ---------------- | --------------------------------------- | --------------- |
@@ -156,5 +156,5 @@ python utils/visualizer.py --env Hopper-v5 --runid 20260408_163845 --loadOption 
 ## Agent Demo Results
 | Ant | Humanoid | HumanoidStandup | Walker2D | 
 | --- | ------ | ---------------- | --------------------------------------- | 
-| ![]() | ![]() | ![]() | ![](assets/demos/walker2d.gif)|
+| ![](assets/demos/ant.gif) | ![]() | ![]() | ![](assets/demos/walker2d.gif)|
 
