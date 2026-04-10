@@ -21,21 +21,6 @@ This repo implements the **Soft Actor-Critic** (SAC) algorithms using [PyTorch](
 | Action Space | (2,) | (2,) | (6,) |
 | Observation Space| (10,) | (8,) | (17,) |
 
-| Environment               | Solved return |
-|---------------------------|--------------:|
-| Reacher-v5                |         -3.75 |
-| Pusher-v5                 |          0.0  |
-| InvertedPendulum-v5       |        950.0  |
-| InvertedDoublePendulum-v5 |       9100.0  |
-| HalfCheetah-v5            |       4800.0  |
-| Hopper-v5                 |       3800.0  |
-| Swimmer-v5                |        360.0  |
-| Walker2d-v5               | N/A           |
-| Ant-v5                    |       6000.0  |
-| Humanoid-v5               | N/A           |
-| HumanoidStandup-v5        | N/A           |
-> `Solved return` is the official Gymnasium `reward_threshold` when one is registered 
-
 # Dependencies & Installation 
 - Python version : 3.10.20 
 - Libraries : 
