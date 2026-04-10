@@ -154,7 +154,11 @@ python utils/visualizer.py --env Hopper-v5 --runid 20260408_163845 --loadOption 
 | `--rank` | Choose rank   | range(`0` to `n`) based on `mpirun` | `None` | 
 
 ## Agent Demo Results
-| Ant | Humanoid | HumanoidStandup | Walker2D | 
-| --- | ------ | ---------------- | --------------------------------------- | 
-| ![](assets/demos/ant.gif) | ![]() | ![]() | ![](assets/demos/walker2d.gif)|
+| Ant | Walker2D | 
+| --- |--------- | 
+| ![](assets/demos/ant.gif) | ![](assets/demos/walker2d.gif)|
+
+| Humanoid | HumanoidStandup |
+| ------ | ----------------- |
+![]() | ![]() |
 

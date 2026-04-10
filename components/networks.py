@@ -124,7 +124,25 @@ class ActorVCriticNetwork(nn.Module):
         value = self.getValue(obs)
 
         return log_prob, entropy, value
-    
+
+class ActorSingleQCriticNetwork(nn.Module): 
+    def __init__(self, obs_dim, act_dim, action_lim=1.0, 
+                 hidden_size_actor=[32, 32], hidden_size_critic=[32, 32], 
+                 hidden_act="ReLU", output_act="Linear"):
+        super().__init__()
+        self.actor = ActorNetwork(obs_dim, act_dim, action_lim, hidden_size_actor, hidden_act, output_act)
+        self.critic = QCriticNetwork(obs_dim, act_dim, hidden_size_critic, hidden_act, output_act)
+
+    def sample_action(self, obs): 
+        action, log_pi, action_mean = self.actor.sample(obs)
+        return action, log_pi, action_mean 
+
+    def act_deterministic(self, obs):
+        return self.actor.act_deterministic(obs)
+
+    def getQvalues(self, obs, act): 
+        return self.critic(obs, act)
+
 class ActorDoubleQCriticNetwork(nn.Module): 
     def __init__(self, obs_dim, act_dim, action_lim=1.0, 
                  hidden_size_actor=[32, 32], hidden_size_critic=[32, 32], 
