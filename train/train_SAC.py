@@ -147,15 +147,20 @@ class SAC(TrainAgent):
             self.env.close()
 
     def _save(self, path):
-            ckpt = {
-                "global_step": self.global_step,
-                "episode_idx": self.episode_idx,
-                "config": self.config,
-                "actor_critic_nets": self.agent.net.state_dict(),
-                "target_critic1": self.agent.target_critic1.state_dict(),
-                "target_critic2": self.agent.target_critic2.state_dict(),
-                "actor_optim": self.agent.actor_optimizer.state_dict(),
-                "critic1_optim": self.agent.crtic1_optimizer.state_dict(),
-                "critic2_optim": self.agent.crtic2_optimizer.state_dict(),
-            }
-            torch.save(ckpt, path)
+        ckpt = {
+            "global_step": self.global_step,
+            "episode_idx": self.episode_idx,
+            "config": self.config,
+            "actor_critic_nets": self.agent.net.state_dict(),
+            "target_critic1": self.agent.target_critic1.state_dict(),
+            "target_critic2": self.agent.target_critic2.state_dict(),
+            "actor_optim": self.agent.actor_optimizer.state_dict(),
+            "critic1_optim": self.agent.crtic1_optimizer.state_dict(),
+            "critic2_optim": self.agent.crtic2_optimizer.state_dict(),
+        }
+
+        if getattr(self.agent, "autotune_alpha", False):
+            ckpt["log_alpha"] = self.agent.log_alpha.detach().cpu()
+            ckpt["alpha_optim"] = self.agent.alpha_optimizer.state_dict()
+
+        torch.save(ckpt, path)

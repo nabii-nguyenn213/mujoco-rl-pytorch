@@ -94,10 +94,10 @@
 | Parameter             |   Value    |
 | ----------------------| ---------: | 
 | `reward_scaler`       | `1.0`      | 
-| `total_timesteps`     |`100_000`   | 
-| `memory_size`         |`50_000`    | 
-| `batch_size`          |`128`       | 
-| `learning_start`      |`1_000`     | 
+| `total_timesteps`     |`500_000`   | 
+| `memory_size`         |`100_000`   | 
+| `batch_size`          |`256`       | 
+| `learning_start`      |`1_0000`    | 
 | `hidden_size_actor`   |`[256, 256]`| 
 | `hidden_size_critic`  |`[256, 256]`| 
 | `actor_lr`            |`0.0003`    | 
