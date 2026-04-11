@@ -82,17 +82,20 @@ mpirun -n 4 python main.py --env Hopper-v5
 
 ## Description of Configuration Parameters 
 
-| Parameter        | Description                             | Example Value   |
-| ---------------- | --------------------------------------- | --------------- |
-| `reward_scaler`  | Scaling factor applied to rewards.      | `1.0`           |
-| `action_lim`     | Maximum action magnitude.               | `1.0`           |
-| `memory_size`    | Replay buffer capacity.                 | `200000`        |
-| `learning_start` | Steps collected before training starts. | `5000`          |
-| `tau`            | Soft target update rate.                | `0.005`         |
-| `gamma`          | Reward discount factor.                 | `0.99`          |
-| `alpha`          | Entropy coefficient.                    | `0.2`           |
-| `hidden_size_actor` | Hidden size of the actor network     | `[64, 64]`      |
-| `hidden_size_critic`| Hidden size of the critic network    | `[64, 64]`      |
+| Parameter            | Description                                            | Value from Config |
+| -------------------- | ------------------------------------------------------ | ----------------- |
+| `reward_scaler`      | Scaling factor applied to rewards.                     | `0.1`             |
+| `memory_size`        | Replay buffer capacity.                                | `1500000`         |
+| `batch_size`         | Number of samples per training batch.                  | `256`             |
+| `learning_start`     | Steps collected before training starts.                | `10000`           |
+| `tau`                | Soft target update rate.                               | `0.005`           |
+| `gamma`              | Reward discount factor.                                | `0.99`            |
+| `auto_alpha`         | Whether entropy coefficient is adjusted automatically. | `true`            |
+| `target_entropy`     | Target entropy used when `auto_alpha = true`.          | `auto`            |
+| `alpha_lr`           | Learning rate for entropy coefficient.                 | `0.0003`          |
+| `hidden_size_actor`  | Hidden layer sizes of the actor network.               | `[512, 512]`      |
+| `hidden_size_critic` | Hidden layer sizes of the critic network.              | `[512, 512]`      |
+| `gradient_step`      | Number of gradient updates per training step.          | `2`               |
 
 ## Tensorboard 
 - Training results can be visualized using [TensorBoard](https://docs.pytorch.org/docs/main/tensorboard.html)
