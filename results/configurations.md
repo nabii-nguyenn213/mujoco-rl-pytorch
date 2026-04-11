@@ -40,9 +40,18 @@
 | `auto_alpha`          |`false`     |
 
 ## Humanoid-v5 
-| Parameter             |   Value |
-| ----------------------| ------: | 
-|  |  | 
+| Parameter             |   Value    |
+| ----------------------| ---------: | 
+| `reward_scaler`       | `0.1`      | 
+| `total_timesteps`     |`3_000_000` | 
+| `memory_size`         |`1_500_000` | 
+| `batch_size`          |`256`       | 
+| `learning_start`      |`10_000`    | 
+| `hidden_size_actor`   |`[512, 512]`| 
+| `hidden_size_critic`  |`[512, 512]`| 
+| `actor_lr`            |`0.0003`    | 
+| `critic_lr`           |`0.0003`    | 
+| `auto_alpha`          |`true`      |
 
 ## HumanoidStandup-v5 
 | Parameter             |   Value |
