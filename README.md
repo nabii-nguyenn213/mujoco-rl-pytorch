@@ -154,5 +154,5 @@ python utils/visualizer.py --env Hopper-v5 --runid 20260408_163845 --loadOption 
 
 | Humanoid | HumanoidStandup |
 | ------ | ----------------- |
-![]() | ![]() |
+![](assets/demos/humanoid.gif) | ![]() |
 
