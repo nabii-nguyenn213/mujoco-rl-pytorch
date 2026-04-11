@@ -51,12 +51,30 @@
 | `hidden_size_critic`  |`[512, 512]`| 
 | `actor_lr`            |`0.0003`    | 
 | `critic_lr`           |`0.0003`    | 
+| `alpha_lr`            |`0.0003`    | 
 | `auto_alpha`          |`true`      |
 
 ## HumanoidStandup-v5 
-| Parameter             |   Value |
-| ----------------------| ------: | 
-|  |  | 
+| Parameter             |   Value    |
+| ----------------------| ---------: | 
+| `reward_scaler`       | `0.1`      | 
+| `total_timesteps`     |`1_000_000` | 
+| `memory_size`         |`1_500_000` | 
+| `batch_size`          |`512`       | 
+| `learning_start`      |`50_000`    | 
+| `hidden_size_actor`   |`[512, 512]`| 
+| `hidden_size_critic`  |`[512, 512]`| 
+| `actor_lr`            |`0.0005`    | 
+| `critic_lr`           |`0.0003`    | 
+| `alpha_lr`            |`0.0001`    | 
+| `auto_alpha`          |`true`      |
+
+| env_kwargs            |   Value    |
+| ----------------------| ---------: | 
+| `ctrl_cost_weight`    | `0.01`     | 
+| `uph_cost_weight`     | `2.0`      | 
+| `reset_noise_scale`   | `0.03`     | 
+
 
 ## InvertedDoublePendulum-v5 
 | Parameter             |   Value    |
@@ -98,6 +116,7 @@
 | `hidden_size_critic`  |`[256, 256]`| 
 | `actor_lr`            |`0.0003`    | 
 | `critic_lr`           |`0.0003`    | 
+| `alpha_lr`            |`0.0003`    | 
 | `auto_alpha`          |`true`      |
 
 ## Reacher-v5 
@@ -126,6 +145,7 @@
 | `hidden_size_critic`  |`[256, 256]`| 
 | `actor_lr`            |`0.0003`    | 
 | `critic_lr`           |`0.0003`    | 
+| `alpha_lr`            |`0.0003`    | 
 | `auto_alpha`          |`true`      |
 
 ## Walker2d-v5
