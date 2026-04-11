@@ -11,7 +11,8 @@ class SAC(TrainAgent):
         super().__init__(config, rank=rank)
         max_episode_steps = self._get("env.max_episode_steps", 0)
         self.env_kwargs = self._get("env.kwargs", {}) or {} 
-        self.env = make_env(self.env_id, max_episode_steps=max_episode_steps, **self.env_kwargs)
+        self.reward_scaler = self._get("env.reward_scaler", 1.0)
+        self.env = make_env(self.env_id, max_episode_steps=max_episode_steps, reward_scaler=self.reward_scaler, **self.env_kwargs)
         self.obs, _ = self.env.reset(seed=self.seed)
         self.env.action_space.seed(self.seed)
         assert len(self.env.observation_space.shape) == 1,"ClassicalSACExperiment currently expects vector observations."
@@ -57,7 +58,7 @@ class SAC(TrainAgent):
     @torch.no_grad()
     def evaluate(self):
         max_episode_steps = self._get("env.max_episode_steps", 0)
-        eval_env = make_env(self.env_id, max_episode_steps=max_episode_steps, **self.env_kwargs)
+        eval_env = make_env(self.env_id, max_episode_steps=max_episode_steps, reward_scaler=self.reward_scaler, **self.env_kwargs)
 
         returns = []
 
@@ -159,7 +160,7 @@ class SAC(TrainAgent):
             "critic2_optim": self.agent.crtic2_optimizer.state_dict(),
         }
 
-        if getattr(self.agent, "autotune_alpha", False):
+        if getattr(self.agent, "auto_alpha", False):
             ckpt["log_alpha"] = self.agent.log_alpha.detach().cpu()
             ckpt["alpha_optim"] = self.agent.alpha_optimizer.state_dict()
 

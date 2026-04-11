@@ -24,7 +24,7 @@ class SAC_Agent:
         obs_dim, act_dim = getObsActDim(config["env"]["name"], **env_kwargs)
     
         if self.auto_alpha: 
-            target_entropy_cfg = config["env"].get("target_entropy", "auto") 
+            target_entropy_cfg = config["train"].get("target_entropy", "auto") 
             if target_entropy_cfg == "auto": 
                 self.target_entropy = -float(act_dim)
             else: 
@@ -157,7 +157,7 @@ class SAC_Agent:
             "critic2_optim": self.crtic2_optimizer.state_dict(),
         }
 
-        if self.autotune_alpha:
+        if self.auto_alpha:
             data["log_alpha"] = self.log_alpha.detach().cpu()
             data["alpha_optim"] = self.alpha_optimizer.state_dict()
 
