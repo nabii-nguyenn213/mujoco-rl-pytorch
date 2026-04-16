@@ -140,7 +140,7 @@ tensorboard --logdir logs/tensorboard_logs/Hopper-v5/SAC_Hopper_20260408_163845/
 
 | Reacher | Swimmer | Walker2D | 
 | ------ | ---------------- | --------------------------------------- | 
-| ![]() | ![]() | ![]()|
+| ![](assets/plots/CSAC/reacher_episode_return_compare.png) | ![]() | ![]()|
 
 - The configurations used to train these agents are presented in [results/configurations.md](results/configurations.md)
 - Visualizations of some of these agents can be found in the [Agent Demo Results](#Agent-Demo-Results) section.
