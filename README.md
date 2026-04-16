@@ -1,5 +1,6 @@
-# Soft Actor Critic Implementation with PyTorch 
-This repo implements the **Soft Actor-Critic** (SAC) algorithms using [PyTorch](https://pytorch.org/) on **Mujoco** environments in [Gymnasium](https://gymnasium.farama.org/environments/mujoco/)
+# Soft Actor Critic (SAC) and Conservative Soft Actor-Critic (CSAC) Implementation with PyTorch 
+This repo implements the [Soft Actor-Critic](https://arxiv.org/pdf/1801.01290) (SAC) & [Conservative Soft Actor-Critic](https://arxiv.org/pdf/2505.03356) (CSAC) algorithms using [PyTorch](https://pytorch.org/) on **Mujoco** environments in [Gymnasium](https://gymnasium.farama.org/environments/mujoco/)
+
 
 # Environments 
 
@@ -71,31 +72,35 @@ python main.py --env Hopper-v5
 ``` 
 | Flag      | Description           | Available value | Default value | 
 | --------- | ----------------------| --------------- | ------------- | 
+| `--agent` | Select Agent          | [`SAC`, `CSAC`] | `SAC`         |
+| `--cfg`   | Config file path      |                 | `configs/SAC.yamp` if `--agent` is `SAC` otherwise `configs/CSAC.yaml` |
 | `--env`   | Select environments   | [Mujoco environments](https://gymnasium.farama.org/environments/mujoco/) | in [configuration file](configs/SAC.yaml) | 
 
 - Train agent with [MPI](https://docs.open-mpi.org/en/v5.0.x/installing-open-mpi/quickstart.html) : train multiple agents with multiple seeds in parallel 
 ```bash 
 # Example Usage
-mpirun -n 4 python main.py --env Hopper-v5 
+mpirun -n 4 python main.py --agent SAC --env Hopper-v5 
 ```
 - `-n` : The number of processes/seeds (MPI ranks) used for parallel agent training.
 
 ## Description of Configuration Parameters 
 
-| Parameter            | Description                                            | Value from Config |
-| -------------------- | ------------------------------------------------------ | ----------------- |
-| `reward_scaler`      | Scaling factor applied to rewards.                     | `0.1`             |
-| `memory_size`        | Replay buffer capacity.                                | `1500000`         |
-| `batch_size`         | Number of samples per training batch.                  | `256`             |
-| `learning_start`     | Steps collected before training starts.                | `10000`           |
-| `tau`                | Soft target update rate.                               | `0.005`           |
-| `gamma`              | Reward discount factor.                                | `0.99`            |
-| `auto_alpha`         | Whether entropy coefficient is adjusted automatically. | `true`            |
-| `target_entropy`     | Target entropy used when `auto_alpha = true`.          | `auto`            |
-| `alpha_lr`           | Learning rate for entropy coefficient.                 | `0.0003`          |
-| `hidden_size_actor`  | Hidden layer sizes of the actor network.               | `[512, 512]`      |
-| `hidden_size_critic` | Hidden layer sizes of the critic network.              | `[512, 512]`      |
-| `gradient_step`      | Number of gradient updates per training step.          | `2`               |
+| Parameter            | Description                                              | SAC          | CSAC         |
+| -------------------- | -------------------------------------------------------- | ------------ | ------------ |
+| `reward_scaler`      | Scaling factor applied to rewards.                       | `0.1`        | `1.0`        |
+| `memory_size`        | Replay buffer capacity.                                  | `1500000`    | `100000`     |
+| `batch_size`         | Number of samples per training batch.                    | `256`        | `256`        |
+| `learning_start`     | Steps collected before training starts.                  | `10000`      | `5000`       |
+| `tau`                | Soft target update rate for target critics.              | `0.005`      | `0.005`      |
+| `gamma`              | Reward discount factor.                                  | `0.99`       | `0.99`       |
+| `auto_alpha`         | Whether entropy coefficient is adjusted automatically.   | `true`       | `—`          |
+| `target_entropy`     | Target entropy used when automatic entropy tuning is on. | `auto`       | `—`          |
+| `alpha_lr`           | Learning rate for entropy coefficient tuning.            | `0.0003`     | `—`          |
+| `sigma`              | Entropy regularization coefficient in CSAC.              | `—`          | `0.2`        |
+| `tau_rel`            | Relative-entropy regularization coefficient in CSAC.     | `—`          | `0.5`        |
+| `hidden_size_actor`  | Hidden layer sizes of the actor network.                 | `[512, 512]` | `[256, 256]` |
+| `hidden_size_critic` | Hidden layer sizes of the critic networks.               | `[512, 512]` | `[256, 256]` |
+| `gradient_step`      | Number of gradient updates per environment step.         | `2`          | `1`          |
 
 ## Tensorboard 
 - Training results can be visualized using [TensorBoard](https://docs.pytorch.org/docs/main/tensorboard.html)
@@ -110,17 +115,32 @@ tensorboard --logdir logs/tensorboard_logs/Hopper-v5/SAC_Hopper_20260408_163845/
 ```
 
 # Results 
-| [Ant](https://gymnasium.farama.org/environments/mujoco/ant/) | [HalfCheetah](https://gymnasium.farama.org/environments/mujoco/half_cheetah/) | [Hopper](https://gymnasium.farama.org/environments/mujoco/hopper/) | [Humanoid](https://gymnasium.farama.org/environments/mujoco/humanoid/) |
+
+## SAC
+| Ant | HalfCheetah | Hopper | Humanoid |
 | ---------------- | ------------------ | --------------------------------------- | --------------- |
 |![](assets/plots/SAC/ant_episode_return_compare.png) | ![](assets/plots/SAC/half_cheetah_episode_return_compare.png) | ![](assets/plots/SAC/hopper_episode_return_compare.png)| ![](assets/plots/SAC/humanoid_episode_return_compare.png) |
 
-| [Humanoid Standup](https://gymnasium.farama.org/environments/mujoco/humanoid_standup/) | [Inverted Double Pendulum](https://gymnasium.farama.org/environments/mujoco/inverted_double_pendulum/#) | [Inverted Pendulum](https://gymnasium.farama.org/environments/mujoco/inverted_pendulum/) | [Pusher](https://gymnasium.farama.org/environments/mujoco/pusher/) |
+| Humanoid Standup | Inverted Double Pendulum | Inverted Pendulum | Pusher |
 | ------ | ---------------- | --------------------------------------- | --------------- |
 | ![](assets/plots/SAC/humanoid_standup_episode_return_compare.png) | ![](assets/plots/SAC/inverted_double_pendulum_episode_return_compare.png) | ![](assets/plots/SAC/inverted_pendulum_episode_return_compare.png)| ![](assets/plots/SAC/pusher_episode_return_compare.png) |
 
-| [Reacher](https://gymnasium.farama.org/environments/mujoco/reacher/) | [Swimmer](https://gymnasium.farama.org/environments/mujoco/swimmer/) | [Walker2D](https://gymnasium.farama.org/environments/mujoco/walker2d/) | 
+| Reacher | Swimmer | Walker2D | 
 | ------ | ---------------- | --------------------------------------- | 
 | ![](assets/plots/SAC/reacher_episode_return_compare.png) | ![](assets/plots/SAC/swimmer_episode_return_compare.png) | ![](assets/plots/SAC/walker2d_episode_return_compare.png)|
+
+## CSAC
+| Ant | HalfCheetah | Hopper | Humanoid |
+| ---------------- | ------------------ | --------------------------------------- | --------------- |
+|![]() | ![]() | ![]()| ![]() |
+
+| Humanoid Standup | Inverted Double Pendulum | Inverted Pendulum | Pusher |
+| ------ | ---------------- | --------------------------------------- | --------------- |
+| ![]() | ![]() | ![](assets/plots/CSAC/inverted_pendulum_episode_return_compare.png)| ![]() |
+
+| Reacher | Swimmer | Walker2D | 
+| ------ | ---------------- | --------------------------------------- | 
+| ![]() | ![]() | ![]()|
 
 - The configurations used to train these agents are presented in [results/configurations.md](results/configurations.md)
 - Visualizations of some of these agents can be found in the [Agent Demo Results](#Agent-Demo-Results) section.
@@ -158,4 +178,5 @@ python utils/visualizer.py --env Hopper-v5 --runid 20260408_163845 --loadOption 
 | Humanoid | HumanoidStandup |
 | ------ | ----------------- |
 ![](assets/demos/humanoid1.gif) | ![](assets/demos/humanoidstandup.gif) |
+
 
