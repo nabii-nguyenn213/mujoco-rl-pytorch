@@ -136,7 +136,7 @@ tensorboard --logdir logs/tensorboard_logs/Hopper-v5/SAC_Hopper_20260408_163845/
 
 | Humanoid Standup | Inverted Double Pendulum | Inverted Pendulum | Pusher |
 | ------ | ---------------- | --------------------------------------- | --------------- |
-| ![]() | ![]() | ![](assets/plots/CSAC/inverted_pendulum_episode_return_compare.png)| ![]() |
+| ![]() | ![](assets/plots/CSAC/inverted_double_pendulum_episode_return_compare.png) | ![](assets/plots/CSAC/inverted_pendulum_episode_return_compare.png)| ![]() |
 
 | Reacher | Swimmer | Walker2D | 
 | ------ | ---------------- | --------------------------------------- | 
