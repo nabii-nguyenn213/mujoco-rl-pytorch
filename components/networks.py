@@ -1,4 +1,4 @@
-from math import log1p
+from numpy import True_
 import torch 
 import torch.nn as nn 
 from torch.distributions import Normal
@@ -70,6 +70,21 @@ class ActorNetwork(nn.Module):
         log_prob = log_prob_u - log_det_jacobian
         mu_action = torch.tanh(mu)
         return a, log_prob, mu_action
+
+    def log_prob(self, obs, act): 
+        if obs.ndim == 1: 
+            obs = obs.unsqueeze(0)
+        if act.ndim == 1: 
+            act = act.unsqueeze(0)
+        action = torch.clamp(act, -1.0 + EPS, 1.0 - EPS)
+        mu, log_std = self.forward(obs)
+        std = torch.exp(log_std)
+        dist = Normal(mu, std)
+        u = atanh(act)
+        log_prob_u = dist.log_prob(u).sum(dim=-1, keepdim=True)
+        log_det_jacobian = torch.log(1.0 - act.pow(2) + EPS).sum(dim=-1, keepdim=True)
+        log_prob = log_prob_u - log_det_jacobian
+        return log_prob
 
 class QCriticNetwork(nn.Module): 
     def __init__(self, obs_dim, act_dim, hidden_size=[32, 32],
