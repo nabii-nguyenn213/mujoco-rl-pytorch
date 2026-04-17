@@ -132,7 +132,7 @@ tensorboard --logdir logs/tensorboard_logs/Hopper-v5/SAC_Hopper_20260408_163845/
 ## CSAC
 | Ant | HalfCheetah | Hopper | Humanoid |
 | ---------------- | ------------------ | --------------------------------------- | --------------- |
-|![]() | ![]() | ![]()| ![]() |
+|![]() | ![]() | ![](assets/plots/CSAC/hopper_episode_return_compare.png)| ![]() |
 
 | Humanoid Standup | Inverted Double Pendulum | Inverted Pendulum | Pusher |
 | ------ | ---------------- | --------------------------------------- | --------------- |
