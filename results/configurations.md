@@ -12,18 +12,20 @@
 | `critic_lr`           |`0.0003`    | 
 | `auto_alpha`          |`false`     |
 ## HalfCheetah-v5
-| Parameter             |   Value    |
-| ----------------------| ---------: | 
-| `reward_scaler`       | `1.0`      | 
-| `total_timesteps`     |`500_000`   | 
-| `memory_size`         |`200_000`   | 
-| `batch_size`          |`128`       | 
-| `learning_start`      |`5_000`     | 
-| `hidden_size_actor`   |`[128, 128]`| 
-| `hidden_size_critic`  |`[256, 256]`| 
-| `actor_lr`            |`0.0003`    | 
-| `critic_lr`           |`0.0003`    | 
-| `auto_alpha`          |`false`     |
+| Parameter             |   SAC      |  CSAC       |
+| ----------------------| ---------: | ----------: |
+| `reward_scaler`       | `1.0`      |  `1.0`      | 
+| `total_timesteps`     |`500_000`   | `500_000`   | 
+| `memory_size`         |`200_000`   | `1_000_000` | 
+| `batch_size`          |`128`       | `256`       | 
+| `learning_start`      |`5_000`     | `10_000`    | 
+| `hidden_size_actor`   |`[128, 128]`| `[256, 256]`| 
+| `hidden_size_critic`  |`[256, 256]`| `[256, 256]`| 
+| `actor_lr`            |`0.0003`    | `0.0003`    | 
+| `critic_lr`           |`0.0003`    | `0.0003`    | 
+| `auto_alpha`          |`false`     |`None`       |
+| `sigma     `          |`None`      |`0.2 `       |
+| `tau_rel`             |`None`      |`0.5`        |
 
 ## Hopper-v5 
 | Parameter             |   SAC      |  CSAC       |
